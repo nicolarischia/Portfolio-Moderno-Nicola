@@ -1,0 +1,100 @@
+# 🚀 Replit Agent Prompt — Portfolio Moderno
+
+## 🎯 Obiettivo
+Ricostruire completamente il mio portfolio personale partendo dal vecchio progetto, mantenendo le informazioni esistenti ma con una **grafica completamente rinnovata, moderna e professionale**.
+
+Il risultato deve essere un portfolio da developer aggiornato al 2026, con UI/UX curata e struttura migliorata.
+
+---
+
+## 🔗 Fonti di riferimento
+
+- Repository GitHub vecchio portfolio:  
+https://github.com/nicolarischia/nicolarischiaportfolio
+
+- Sito online vecchio portfolio:  
+https://nicolarischia.github.io/nicolarischiaportfolio/
+
+---
+
+## 🧱 Stack richiesto
+
+- Next.js (ultima versione stabile)
+- TypeScript
+- TailwindCSS
+- Componenti UI moderni (shadcn/ui o equivalente)
+- Framer Motion (opzionale per animazioni leggere)
+- Deploy-ready (Vercel o GitHub Pages)
+
+---
+
+## 🎨 Direzione design
+
+Il nuovo portfolio deve avere uno stile:
+
+- moderno e minimalista
+- ispirato a portfolio di developer senior e big tech
+- molto pulito, con tanto spazio bianco
+- tipografia forte e leggibile
+- animazioni fluide ma non invasive
+
+### Riferimenti estetici:
+- vercel.com
+- stripe.com (versione semplificata)
+- linear.app
+
+---
+
+## 📌 Struttura del sito
+
+### 1. Hero section
+- Nome e ruolo professionale
+- breve descrizione
+- CTA (GitHub, contatti, CV)
+
+### 2. About
+- descrizione personale migliorata e più professionale
+
+### 3. Skills
+- tecnologie organizzate per categorie
+
+### 4. Projects
+- estrarre i progetti dal vecchio repository GitHub
+- mostrare card moderne con:
+  - nome progetto
+  - descrizione
+  - stack utilizzato
+  - link GitHub e/o demo
+
+### 5. Experience (se presente nei dati)
+- timeline moderna e pulita
+
+### 6. Contact
+- email + social link oppure form semplice
+
+---
+
+## ⚙️ Requisiti tecnici
+
+- codice pulito, modulare e componentizzato
+- design completamente rinnovato (NON riutilizzare il vecchio layout)
+- mobile-first e completamente responsive
+- performance elevate (Lighthouse 90+)
+- SEO ottimizzato
+- immagini e asset ottimizzati
+
+---
+
+## 🧠 Regole importanti
+
+- Non copiare il design del vecchio portfolio
+- Riutilizzare solo i contenuti, non la struttura
+- Migliorare i testi dove necessario per renderli più professionali
+- Estrarre dati direttamente dal repository GitHub se mancanti
+- Evitare codice legacy
+
+---
+
+## ✨ Output finale atteso
+
+Un portfolio moderno, elegante e altamente professionale, pronto per essere pubblicato e utilizzato come portfolio principale.
