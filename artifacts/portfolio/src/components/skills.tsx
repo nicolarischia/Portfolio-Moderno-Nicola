@@ -23,22 +23,23 @@ export function Skills() {
   return (
     <section id="skills" className="py-24">
       <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-12 gap-16">
+        <div className="grid lg:grid-cols-12 gap-16 relative">
+          <div className="absolute inset-0 bg-black/20 backdrop-blur-sm rounded-3xl border border-white/5 -z-10" />
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.5 }}
-            className="lg:col-span-4"
+            className="lg:col-span-4 p-8"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Technical Arsenal</h2>
-            <div className="w-12 h-1 bg-primary mb-6" />
-            <p className="text-muted-foreground text-lg">
+            <div className="w-12 h-1 bg-secondary mb-6" />
+            <p className="text-foreground/80 text-lg">
               A comprehensive toolkit spanning frontend interfaces, backend architecture, and core programming concepts.
             </p>
           </motion.div>
 
-          <div className="lg:col-span-8 grid sm:grid-cols-2 gap-x-8 gap-y-12">
+          <div className="lg:col-span-8 grid sm:grid-cols-2 gap-x-8 gap-y-12 p-8">
             {categories.map((category, index) => (
               <motion.div
                 key={category.title}
@@ -52,7 +53,7 @@ export function Skills() {
                   {category.skills.map((skill) => (
                     <div 
                       key={skill}
-                      className="px-4 py-2 bg-card border border-border/50 rounded-lg text-sm font-medium text-foreground hover:border-primary/30 transition-colors"
+                      className="px-4 py-2 bg-black/40 border border-white/10 rounded-lg text-sm font-medium text-foreground hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all shadow-sm"
                     >
                       {skill}
                     </div>
