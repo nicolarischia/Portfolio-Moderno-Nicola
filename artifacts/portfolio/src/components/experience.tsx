@@ -29,20 +29,20 @@ const timeline = [
 
 export function Experience() {
   return (
-    <section id="experience" className="py-24">
-      <div className="container mx-auto px-6 max-w-4xl">
+    <section id="experience" className="py-16 md:py-24">
+      <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
-          className="mb-16 p-6 bg-black/20 backdrop-blur-sm rounded-xl border border-white/5"
+          className="mb-10 sm:mb-16 p-4 sm:p-6 bg-black/20 backdrop-blur-sm rounded-xl border border-white/5"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Formazione & Esperienza</h2>
-          <div className="w-12 h-1 bg-secondary mb-6" />
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Formazione & Esperienza</h2>
+          <div className="w-12 h-1 bg-secondary" />
         </motion.div>
 
-        <div className="relative border-l border-white/20 ml-4 md:ml-0 bg-black/10 backdrop-blur-sm p-8 rounded-3xl border border-white/5">
+        <div className="relative border-l border-white/20 bg-black/10 backdrop-blur-sm p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-white/5">
           {timeline.map((item, index) => (
             <motion.div
               key={index}
@@ -50,19 +50,19 @@ export function Experience() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="mb-12 pl-8 md:pl-12 relative group"
+              className="mb-8 sm:mb-12 pl-5 sm:pl-12 relative group last:mb-0"
             >
               <span className="absolute -left-[5px] top-2 w-[9px] h-[9px] rounded-full bg-black border-2 border-secondary group-hover:scale-150 group-hover:bg-secondary group-hover:shadow-[0_0_10px_rgba(234,88,12,0.8)] transition-all duration-300" />
-              
-              <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-4 mb-2">
-                <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">{item.title}</h3>
-                <span className="text-sm font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded">
+
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1.5 sm:gap-4 mb-2">
+                <h3 className="text-base sm:text-xl font-bold text-foreground group-hover:text-primary transition-colors leading-tight">{item.title}</h3>
+                <span className="text-xs sm:text-sm font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded self-start sm:self-auto whitespace-nowrap">
                   {item.year}
                 </span>
               </div>
-              
-              <h4 className="text-md font-medium text-foreground/80 mb-3">{item.institution}</h4>
-              <p className="text-muted-foreground leading-relaxed max-w-2xl">
+
+              <h4 className="text-sm sm:text-md font-medium text-foreground/70 mb-2 sm:mb-3">{item.institution}</h4>
+              <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-2xl">
                 {item.description}
               </p>
             </motion.div>
