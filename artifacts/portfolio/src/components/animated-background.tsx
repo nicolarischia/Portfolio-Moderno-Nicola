@@ -46,11 +46,11 @@ export function AnimatedBackground() {
   return (
     <div
       className="fixed inset-0 z-[-1] pointer-events-none overflow-hidden"
-      style={{ background: "hsl(0 0% 3%)" }}
+      style={{ background: "#000" }}
     >
       {particles.map((p) => {
         const color = p.lime ? "#a3e635" : "#fb923c";
-        const opacity = 0.4 + (p.id % 5) * 0.07;
+        const opacity = 0.1 + (p.id % 5) * 0.03;
 
         let shapeStyle: React.CSSProperties = {};
         if (p.kind === "circle") {
@@ -58,7 +58,7 @@ export function AnimatedBackground() {
         } else if (p.kind === "square") {
           shapeStyle = {
             background: "transparent",
-            border: `2.5px solid ${color}`,
+            border: `2px solid ${color}`,
           };
         } else {
           shapeStyle = {
@@ -78,6 +78,7 @@ export function AnimatedBackground() {
               width: p.size,
               height: p.size,
               opacity,
+              filter: "blur(0.8px)",
               ...shapeStyle,
             }}
             animate={{
