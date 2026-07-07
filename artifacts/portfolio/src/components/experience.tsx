@@ -6,25 +6,24 @@ const timeline = [
     title: "Diploma di Perito Informatico",
     institution: "Istituto Tecnico Tecnologico 'Allievi - San Gallo', Terni",
     description: "Specializzazione in programmazione, reti informatiche e architetture di sistemi digitali.",
+    type: "education",
   },
   {
-    year: "2023 — 2024",
-    title: "React Avanzato e Architetture Frontend",
-    institution: "Studio autonomo",
-    description: "Approfondimento dei paradigmi moderni di React, gestione dello stato e architetture frontend scalabili.",
+    year: "2024 — 2025",
+    title: "Stage — Digital Web Lab",
+    institution: "Digital Web Lab · Avigliano Umbro",
+    description: "Collaborazione nell'azienda informatica fondata in sinergia con Vittoria Assicurazioni. Attività di sviluppo web e supporto alla realizzazione di siti e applicazioni mobile per clienti e aziende.",
+    link: "https://www.digitalweblab.it/",
+    type: "work",
   },
   {
-    year: "2023",
-    title: "Algoritmi e Strutture Dati in JavaScript",
-    institution: "freeCodeCamp",
-    description: "Algoritmi fondamentali, strutture dati e metodologie di problem solving in JavaScript.",
+    year: "2024 — 2025",
+    title: "Stage — Vittoria Assicurazioni",
+    institution: "Agenzia Avorio & Febbraro · Avigliano Umbro",
+    description: "Stage presso l'agenzia di Diego Avorio e Marco Febbraro, operativa dal 2010, con circa 12.000 clienti. Attività di digitalizzazione documenti cartacei, supporto ai processi amministrativi e assistenza clienti.",
+    link: "https://www.agenzievittoria.com/aviglianoumbro/",
+    type: "work",
   },
-  {
-    year: "In corso",
-    title: "Laboratori di Reti e Sistemi",
-    institution: "Esperienza pratica",
-    description: "Configurazione e simulazione hands-on con Cisco Packet Tracer.",
-  }
 ];
 
 export function Experience() {
@@ -52,16 +51,35 @@ export function Experience() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="mb-8 sm:mb-12 pl-5 sm:pl-12 relative group last:mb-0"
             >
-              <span className="absolute -left-[5px] top-2 w-[9px] h-[9px] rounded-full bg-black border-2 border-secondary group-hover:scale-150 group-hover:bg-secondary group-hover:shadow-[0_0_10px_rgba(234,88,12,0.8)] transition-all duration-300" />
+              <span className={`absolute -left-[5px] top-2 w-[9px] h-[9px] rounded-full bg-black border-2 transition-all duration-300 group-hover:scale-150 group-hover:shadow-[0_0_10px] ${
+                item.type === "work"
+                  ? "border-secondary group-hover:bg-secondary group-hover:shadow-secondary/80"
+                  : "border-primary group-hover:bg-primary group-hover:shadow-primary/80"
+              }`} />
 
               <div className="flex flex-col sm:flex-row sm:items-baseline gap-1.5 sm:gap-4 mb-2">
-                <h3 className="text-base sm:text-xl font-bold text-foreground group-hover:text-primary transition-colors leading-tight">{item.title}</h3>
+                <h3 className="text-base sm:text-xl font-bold text-foreground group-hover:text-primary transition-colors leading-tight">
+                  {item.title}
+                </h3>
                 <span className="text-xs sm:text-sm font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded self-start sm:self-auto whitespace-nowrap">
                   {item.year}
                 </span>
               </div>
 
-              <h4 className="text-sm sm:text-md font-medium text-foreground/70 mb-2 sm:mb-3">{item.institution}</h4>
+              <h4 className="text-sm sm:text-md font-medium text-foreground/70 mb-2 sm:mb-3">
+                {item.link ? (
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-secondary transition-colors underline-offset-2 hover:underline"
+                  >
+                    {item.institution}
+                  </a>
+                ) : (
+                  item.institution
+                )}
+              </h4>
               <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-2xl">
                 {item.description}
               </p>
