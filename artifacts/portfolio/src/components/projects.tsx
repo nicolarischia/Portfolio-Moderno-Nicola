@@ -9,6 +9,7 @@ const projects = [
     stack: ["React", "Node.js", "MongoDB", "JavaScript", "HTML5", "CSS3"],
     github: "https://github.com/nicolarischia/ProgettoSport-Natili-Rischia-Tiberi",
     live: "",
+    image: "/img/progetto1.png",
   },
   {
     title: "Gioielleria Avorio",
@@ -16,6 +17,7 @@ const projects = [
     stack: ["Wix"],
     github: "",
     live: "https://info2211238.wixsite.com/gioielleriaavorio",
+    image: "/img/progetto2.png",
   },
   {
     title: "Interfaccia Showcase",
@@ -23,6 +25,7 @@ const projects = [
     stack: ["React", "JavaScript", "CSS3", "Bootstrap"],
     github: "https://github.com/Garlics07/Progetto1_Gilardi_Rischia",
     live: "",
+    image: "/img/progetto3.png",
   }
 ];
 
@@ -52,38 +55,51 @@ export function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl p-5 sm:p-8 hover:border-secondary/50 hover:shadow-[0_0_30px_rgba(234,88,12,0.15)] transition-all duration-300 flex flex-col h-full"
+              className="group relative bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden hover:border-secondary/50 hover:shadow-[0_0_30px_rgba(234,88,12,0.15)] transition-all duration-300 flex flex-col"
             >
-              <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 group-hover:text-secondary transition-colors">
-                {project.title}
-              </h3>
-              <p className="text-muted-foreground text-sm sm:text-base mb-5 sm:mb-6 flex-grow">
-                {project.description}
-              </p>
-
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-5 sm:mb-8">
-                {project.stack.map((tech) => (
-                  <span key={tech} className="text-xs font-mono px-2 py-1 bg-white/5 text-white/90 border border-white/10 rounded-md">
-                    {tech}
-                  </span>
-                ))}
+              {/* Project image */}
+              <div className="relative overflow-hidden h-44 sm:h-48 bg-white/5">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
               </div>
 
-              <div className="flex items-center gap-2 sm:gap-3 mt-auto pt-4 border-t border-white/10">
-                {project.github && (
-                  <Button variant="outline" size="sm" className="rounded-full gap-1.5 sm:gap-2 border-white/20 hover:border-secondary hover:text-secondary hover:bg-secondary/10 text-xs sm:text-sm" asChild>
-                    <a href={project.github} target="_blank" rel="noopener noreferrer">
-                      <Github className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Codice
-                    </a>
-                  </Button>
-                )}
-                {project.live && (
-                  <Button variant="outline" size="sm" className="rounded-full gap-1.5 sm:gap-2 border-white/20 hover:border-secondary hover:text-secondary hover:bg-secondary/10 text-xs sm:text-sm" asChild>
-                    <a href={project.live} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Visita
-                    </a>
-                  </Button>
-                )}
+              {/* Card body */}
+              <div className="flex flex-col flex-1 p-5 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 group-hover:text-secondary transition-colors">
+                  {project.title}
+                </h3>
+                <p className="text-muted-foreground text-sm sm:text-base mb-4 sm:mb-5 flex-grow">
+                  {project.description}
+                </p>
+
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-5">
+                  {project.stack.map((tech) => (
+                    <span key={tech} className="text-xs font-mono px-2 py-1 bg-white/5 text-white/90 border border-white/10 rounded-md">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-2 sm:gap-3 pt-4 border-t border-white/10">
+                  {project.github && (
+                    <Button variant="outline" size="sm" className="rounded-full gap-1.5 sm:gap-2 border-white/20 hover:border-secondary hover:text-secondary hover:bg-secondary/10 text-xs sm:text-sm" asChild>
+                      <a href={project.github} target="_blank" rel="noopener noreferrer">
+                        <Github className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Codice
+                      </a>
+                    </Button>
+                  )}
+                  {project.live && (
+                    <Button variant="outline" size="sm" className="rounded-full gap-1.5 sm:gap-2 border-white/20 hover:border-secondary hover:text-secondary hover:bg-secondary/10 text-xs sm:text-sm" asChild>
+                      <a href={project.live} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="h-3.5 w-3.5 sm:h-4 sm:w-4" /> Visita
+                      </a>
+                    </Button>
+                  )}
+                </div>
               </div>
             </motion.div>
           ))}
