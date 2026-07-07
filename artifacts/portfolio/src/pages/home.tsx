@@ -23,7 +23,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
+    <div className="min-h-screen text-foreground relative">
       <AnimatedBackground />
       <Navigation onSearchOpen={() => setSpotlightOpen(true)} />
       <Spotlight isOpen={spotlightOpen} onClose={() => setSpotlightOpen(false)} />
