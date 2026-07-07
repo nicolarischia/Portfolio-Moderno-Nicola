@@ -10,11 +10,11 @@ const categories = [
     skills: ["Node.js", "PHP", "Python", "MongoDB", "MySQL"]
   },
   {
-    title: "Programming",
+    title: "Programmazione",
     skills: ["Java (Swing UI)", "C"]
   },
   {
-    title: "Tools",
+    title: "Strumenti",
     skills: ["Git", "Figma", "Wix", "Cisco Packet Tracer", "Jotform", "Airtable"]
   }
 ];
@@ -32,10 +32,10 @@ export function Skills() {
             transition={{ duration: 0.5 }}
             className="lg:col-span-4 p-8"
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Technical Arsenal</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Competenze Tecniche</h2>
             <div className="w-12 h-1 bg-secondary mb-6" />
             <p className="text-foreground/80 text-lg">
-              A comprehensive toolkit spanning frontend interfaces, backend architecture, and core programming concepts.
+              Un toolkit completo che spazia tra interfacce frontend, architetture backend e concetti fondamentali di programmazione.
             </p>
           </motion.div>
 

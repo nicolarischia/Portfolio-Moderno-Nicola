@@ -2,28 +2,28 @@ import { motion } from "framer-motion";
 
 const timeline = [
   {
-    year: "Expected 2025",
-    title: "Diploma Perito Informatico",
+    year: "Previsto 2025",
+    title: "Diploma di Perito Informatico",
     institution: "Istituto Tecnico Tecnologico 'Allievi - San Gallo', Terni",
-    description: "Focus on programming, networking, and digital systems architecture.",
+    description: "Specializzazione in programmazione, reti informatiche e architetture di sistemi digitali.",
   },
   {
     year: "2023 — 2024",
-    title: "Advanced React & Frontend Architecture",
-    institution: "Self-taught",
-    description: "Deep dive into modern React paradigms, state management, and scalable frontend architectures.",
+    title: "React Avanzato e Architetture Frontend",
+    institution: "Studio autonomo",
+    description: "Approfondimento dei paradigmi moderni di React, gestione dello stato e architetture frontend scalabili.",
   },
   {
     year: "2023",
-    title: "JavaScript Algorithms & Data Structures",
+    title: "Algoritmi e Strutture Dati in JavaScript",
     institution: "freeCodeCamp",
-    description: "Core algorithms, data structures, and problem-solving methodologies in JavaScript.",
+    description: "Algoritmi fondamentali, strutture dati e metodologie di problem solving in JavaScript.",
   },
   {
-    year: "Ongoing",
-    title: "Networking & Systems Labs",
-    institution: "Practical Experience",
-    description: "Hands-on configuration and simulation using Cisco Packet Tracer.",
+    year: "In corso",
+    title: "Laboratori di Reti e Sistemi",
+    institution: "Esperienza pratica",
+    description: "Configurazione e simulazione hands-on con Cisco Packet Tracer.",
   }
 ];
 
@@ -38,7 +38,7 @@ export function Experience() {
           transition={{ duration: 0.5 }}
           className="mb-16 p-6 bg-black/20 backdrop-blur-sm rounded-xl border border-white/5"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Experience & Education</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Formazione & Esperienza</h2>
           <div className="w-12 h-1 bg-secondary mb-6" />
         </motion.div>
 

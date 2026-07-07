@@ -4,22 +4,22 @@ import { Button } from "@/components/ui/button";
 
 const projects = [
   {
-    title: "Data Management Platform",
-    description: "A complete web application for data and user management, featuring authentication, a dynamic dashboard, and RESTful APIs.",
+    title: "Piattaforma di Gestione Dati",
+    description: "Un'applicazione web completa per la gestione di dati e utenti, con autenticazione, dashboard dinamica e API RESTful.",
     stack: ["React", "Node.js", "MongoDB", "JavaScript", "HTML5", "CSS3"],
     github: "https://github.com/nicolarischia/ProgettoSport-Natili-Rischia-Tiberi",
     live: "",
   },
   {
     title: "Gioielleria Avorio",
-    description: "A modern, responsive showcase site for a jewelry store, with custom graphics, contact forms, and social integration.",
+    description: "Sito vetrina moderno e responsive per una gioielleria, con grafica personalizzata, moduli di contatto e integrazione social.",
     stack: ["Wix"],
     github: "",
     live: "https://info2211238.wixsite.com/gioielleriaavorio",
   },
   {
-    title: "Showcase Interface",
-    description: "A modern, responsive frontend showcase interface demonstrating clean layout and UI principles.",
+    title: "Interfaccia Showcase",
+    description: "Un'interfaccia frontend moderna e responsive che dimostra principi di layout pulito e UI curata.",
     stack: ["React", "JavaScript", "CSS3", "Bootstrap"],
     github: "https://github.com/Garlics07/Progetto1_Gilardi_Rischia",
     live: "",
@@ -37,10 +37,10 @@ export function Projects() {
           transition={{ duration: 0.5 }}
           className="mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Selected Work</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Progetti</h2>
           <div className="w-12 h-1 bg-primary mb-6" />
           <p className="text-foreground/80 text-lg max-w-2xl bg-black/20 p-4 rounded-xl backdrop-blur-sm border border-white/5">
-            A collection of projects showcasing my skills in frontend and backend development.
+            Una raccolta di progetti che mostrano le mie competenze nello sviluppo frontend e backend.
           </p>
         </motion.div>
 
@@ -73,14 +73,14 @@ export function Projects() {
                 {project.github && (
                   <Button variant="outline" size="sm" className="rounded-full gap-2 border-white/20 hover:border-secondary hover:text-secondary hover:bg-secondary/10" asChild>
                     <a href={project.github} target="_blank" rel="noopener noreferrer">
-                      <Github className="h-4 w-4" /> Code
+                      <Github className="h-4 w-4" /> Codice
                     </a>
                   </Button>
                 )}
                 {project.live && (
                   <Button variant="outline" size="sm" className="rounded-full gap-2 border-white/20 hover:border-secondary hover:text-secondary hover:bg-secondary/10" asChild>
                     <a href={project.live} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="h-4 w-4" /> Visit Site
+                      <ExternalLink className="h-4 w-4" /> Visita
                     </a>
                   </Button>
                 )}

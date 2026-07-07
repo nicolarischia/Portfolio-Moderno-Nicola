@@ -15,15 +15,15 @@ export function Contact() {
           transition={{ duration: 0.5 }}
           className="max-w-2xl mx-auto bg-black/40 backdrop-blur-md p-10 rounded-3xl border border-white/10"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">Let's build together.</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">Costruiamo qualcosa insieme.</h2>
           <p className="text-lg text-foreground/80 mb-12">
-            I'm currently open to new opportunities. Whether you have a question, a project idea, or just want to say hi, I'll try my best to get back to you!
+            Sono aperto a nuove opportunità. Che tu abbia una domanda, un'idea di progetto o voglia semplicemente salutarmi, ti rispondo al più presto!
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button size="lg" className="w-full sm:w-auto rounded-full font-medium h-14 px-8 shadow-[0_0_20px_rgba(132,204,22,0.3)] hover:shadow-[0_0_30px_rgba(132,204,22,0.5)] transition-all" asChild>
               <a href="mailto:nicolarischia1@gmail.com">
-                <Mail className="mr-2 h-5 w-5" /> Say Hello
+                <Mail className="mr-2 h-5 w-5" /> Scrivimi
               </a>
             </Button>
             <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-full font-medium h-14 px-8 border-white/20 hover:border-secondary hover:text-secondary hover:bg-secondary/10 transition-colors" asChild>
@@ -35,7 +35,7 @@ export function Contact() {
           
           <div className="mt-20 pt-10 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
             <p className="text-muted-foreground text-sm">
-              © {new Date().getFullYear()} Nicola Rischia. All rights reserved.
+              © {new Date().getFullYear()} Nicola Rischia. Tutti i diritti riservati.
             </p>
             <div className="flex items-center gap-4">
               <a href="https://github.com/nicolarischia" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors p-2 bg-white/5 rounded-full hover:bg-primary/10">
