@@ -1,22 +1,87 @@
 import { motion } from "framer-motion";
+import {
+  siHtml5, siCss, siJavascript, siReact, siAngular, siBootstrap,
+  siNodedotjs, siPhp, siPython, siMongodb, siMysql, siOpenjdk,
+  siC, siGit, siFigma, siWix, siCisco, siAirtable
+} from "simple-icons";
 
-const categories = [
+interface SimpleIcon {
+  path: string;
+  hex: string;
+}
+
+function TechIcon({ icon, color }: { icon: SimpleIcon; color?: string }) {
+  const fill = color ?? `#${icon.hex}`;
+  return (
+    <svg
+      role="img"
+      viewBox="0 0 24 24"
+      width="14"
+      height="14"
+      fill={fill}
+      className="shrink-0"
+      aria-hidden="true"
+    >
+      <path d={icon.path} />
+    </svg>
+  );
+}
+
+function DotIcon({ color }: { color: string }) {
+  return (
+    <span
+      className="inline-block w-3 h-3 rounded-full shrink-0"
+      style={{ backgroundColor: color }}
+      aria-hidden="true"
+    />
+  );
+}
+
+interface Skill {
+  name: string;
+  icon: React.ReactNode;
+}
+
+const categories: { title: string; skills: Skill[] }[] = [
   {
     title: "Frontend",
-    skills: ["HTML5", "CSS3", "JavaScript", "React", "Angular", "Bootstrap"]
+    skills: [
+      { name: "HTML5",      icon: <TechIcon icon={siHtml5} /> },
+      { name: "CSS3",       icon: <TechIcon icon={siCss} color="#1572B6" /> },
+      { name: "JavaScript", icon: <TechIcon icon={siJavascript} /> },
+      { name: "React",      icon: <TechIcon icon={siReact} /> },
+      { name: "Angular",    icon: <TechIcon icon={siAngular} color="#DD0031" /> },
+      { name: "Bootstrap",  icon: <TechIcon icon={siBootstrap} /> },
+    ],
   },
   {
     title: "Backend",
-    skills: ["Node.js", "PHP", "Python", "MongoDB", "MySQL"]
+    skills: [
+      { name: "Node.js",  icon: <TechIcon icon={siNodedotjs} /> },
+      { name: "PHP",      icon: <TechIcon icon={siPhp} /> },
+      { name: "Python",   icon: <TechIcon icon={siPython} /> },
+      { name: "MongoDB",  icon: <TechIcon icon={siMongodb} /> },
+      { name: "MySQL",    icon: <TechIcon icon={siMysql} /> },
+    ],
   },
   {
     title: "Programmazione",
-    skills: ["Java (Swing UI)", "C"]
+    skills: [
+      { name: "Java (Swing UI)", icon: <TechIcon icon={siOpenjdk} color="#ED8B00" /> },
+      { name: "C",               icon: <TechIcon icon={siC} /> },
+    ],
   },
   {
     title: "Strumenti",
-    skills: ["Git", "Figma", "Wix", "Cisco Packet Tracer", "Jotform", "Airtable"]
-  }
+    skills: [
+      { name: "Git",                 icon: <TechIcon icon={siGit} /> },
+      { name: "Figma",               icon: <TechIcon icon={siFigma} /> },
+      { name: "Wix",                 icon: <TechIcon icon={siWix} /> },
+      { name: "Cisco Packet Tracer", icon: <TechIcon icon={siCisco} /> },
+      { name: "Jotform",             icon: <DotIcon color="#FF6100" /> },
+      { name: "Airtable",            icon: <TechIcon icon={siAirtable} /> },
+    ],
+  },
 ];
 
 export function Skills() {
@@ -53,10 +118,11 @@ export function Skills() {
                 <div className="flex flex-wrap gap-2 sm:gap-3">
                   {category.skills.map((skill) => (
                     <div
-                      key={skill}
-                      className="px-3 sm:px-4 py-1.5 sm:py-2 bg-black/40 border border-white/10 rounded-lg text-xs sm:text-sm font-medium text-foreground hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all shadow-sm"
+                      key={skill.name}
+                      className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-black/40 border border-white/10 rounded-lg text-xs sm:text-sm font-medium text-foreground hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all shadow-sm"
                     >
-                      {skill}
+                      {skill.icon}
+                      {skill.name}
                     </div>
                   ))}
                 </div>
