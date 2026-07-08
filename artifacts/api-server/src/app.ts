@@ -31,4 +31,17 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", router);
 
+app.use(
+  (
+    err: unknown,
+    req: import("express").Request,
+    res: import("express").Response,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _next: import("express").NextFunction,
+  ) => {
+    req.log?.error({ err });
+    res.status(500).json({ error: "Si è verificato un errore imprevisto." });
+  },
+);
+
 export default app;

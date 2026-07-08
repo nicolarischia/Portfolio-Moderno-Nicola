@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, FileDown, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const CV_URL = `${import.meta.env.BASE_URL}cv-nicola-rischia.pdf`;
 
 export function Hero() {
   return (
@@ -32,6 +34,11 @@ export function Hero() {
             <Button size="lg" className="rounded-full font-medium shadow-[0_0_20px_rgba(132,204,22,0.3)] hover:shadow-[0_0_30px_rgba(132,204,22,0.5)] transition-all text-sm sm:text-base px-5 sm:px-6" asChild>
               <a href="#projects">
                 Vedi Progetti <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
+            <Button size="lg" variant="outline" className="rounded-full font-medium text-sm sm:text-base px-5 sm:px-6 border-white/20 hover:border-secondary hover:text-secondary hover:bg-secondary/10 transition-colors" asChild>
+              <a href={CV_URL} download="CV-Nicola-Rischia.pdf">
+                Scarica CV <FileDown className="ml-2 h-4 w-4" />
               </a>
             </Button>
             <div className="flex items-center gap-1 sm:gap-2">

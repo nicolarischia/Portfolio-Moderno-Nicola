@@ -5,9 +5,6 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-export interface HealthStatus {
-  status: string;
-}
 
 export interface AiSearchRequest {
   /**
@@ -16,8 +13,3 @@ export interface AiSearchRequest {
      */
   query: string;
 }
-
-export interface AiAnswer {
-  answer: string;
-}
-

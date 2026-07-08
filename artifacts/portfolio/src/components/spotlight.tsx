@@ -1,6 +1,18 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Hash, Code2, GraduationCap, Mail, X, ArrowRight } from "lucide-react";
+import { Search, Hash, Code2, GraduationCap, Mail, X, ArrowRight, FileDown, Sparkles, Loader2 } from "lucide-react";
+import { useAiSearch } from "@workspace/api-client-react";
+
+const CV_URL = `${import.meta.env.BASE_URL}cv-nicola-rischia.pdf`;
+
+function downloadCV() {
+  const link = document.createElement("a");
+  link.href = CV_URL;
+  link.download = "CV-Nicola-Rischia.pdf";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
 interface SearchResult {
   id: string;
@@ -127,6 +139,12 @@ const ALL_RESULTS: SearchResult[] = [
     action: () => window.open("https://linkedin.com/in/nicolarischia", "_blank"),
     icon: <ArrowRight className="h-4 w-4" />, keywords: "linkedin profilo lavoro",
   },
+  {
+    id: "ct-cv", category: "Contatti", title: "Scarica il CV",
+    subtitle: "Curriculum in formato PDF",
+    action: downloadCV,
+    icon: <FileDown className="h-4 w-4" />, keywords: "cv curriculum vitae pdf scarica download resume",
+  },
 ];
 
 const CATEGORY_ORDER = ["Sezioni", "Competenze", "Progetti", "Formazione", "Contatti"];
@@ -139,8 +157,11 @@ interface SpotlightProps {
 export function Spotlight({ isOpen, onClose }: SpotlightProps) {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [aiAnswer, setAiAnswer] = useState<{ question: string; answer: string } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+
+  const aiSearch = useAiSearch();
 
   const filtered = query.trim() === ""
     ? ALL_RESULTS
@@ -157,20 +178,33 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
   }, {});
 
   const flat = Object.values(grouped).flat();
+  const showAskAi = query.trim().length > 2;
 
   const handleSelect = useCallback((result: SearchResult) => {
     result.action();
     onClose();
   }, [onClose]);
 
-  useEffect(() => { setSelectedIndex(0); }, [query]);
+  const handleAskAi = useCallback(() => {
+    const question = query.trim();
+    if (!question || aiSearch.isPending) return;
+    aiSearch.mutate(
+      { data: { query: question } },
+      { onSuccess: (data) => setAiAnswer({ question, answer: data.answer }) }
+    );
+  }, [query, aiSearch]);
+
+  useEffect(() => { setSelectedIndex(0); setAiAnswer(null); }, [query]);
 
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 50);
       setQuery("");
       setSelectedIndex(0);
+      setAiAnswer(null);
+      aiSearch.reset();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   useEffect(() => {
@@ -184,11 +218,12 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
       if (e.key === "Escape") { onClose(); return; }
       if (e.key === "ArrowDown") { e.preventDefault(); setSelectedIndex(i => Math.min(i + 1, flat.length - 1)); }
       else if (e.key === "ArrowUp") { e.preventDefault(); setSelectedIndex(i => Math.max(i - 1, 0)); }
+      else if (e.key === "Enter" && e.shiftKey && showAskAi) { e.preventDefault(); handleAskAi(); }
       else if (e.key === "Enter" && flat[selectedIndex]) { handleSelect(flat[selectedIndex]); }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [isOpen, flat, selectedIndex, handleSelect, onClose]);
+  }, [isOpen, flat, selectedIndex, handleSelect, onClose, showAskAi, handleAskAi]);
 
   return (
     <AnimatePresence>
@@ -227,6 +262,40 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
               </div>
 
               <div ref={listRef} className="max-h-[55vh] sm:max-h-[60vh] overflow-y-auto py-1 sm:py-2 no-scrollbar">
+                {showAskAi && (
+                  <div className="px-3 sm:px-4 pb-2 sm:pb-3 pt-1">
+                    {!aiAnswer || aiAnswer.question !== query.trim() ? (
+                      <button
+                        onClick={handleAskAi}
+                        disabled={aiSearch.isPending}
+                        className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl border border-secondary/30 bg-secondary/10 hover:bg-secondary/15 transition-colors text-left disabled:opacity-70"
+                      >
+                        {aiSearch.isPending ? (
+                          <Loader2 className="h-4 w-4 shrink-0 text-secondary animate-spin" />
+                        ) : (
+                          <Sparkles className="h-4 w-4 shrink-0 text-secondary" />
+                        )}
+                        <span className="flex-1 min-w-0 text-xs sm:text-sm font-medium text-secondary truncate">
+                          {aiSearch.isPending ? "Sto pensando..." : `Chiedi all'IA: "${query.trim()}"`}
+                        </span>
+                        {!aiSearch.isPending && <kbd className="hidden sm:inline font-mono text-[10px] text-secondary/60">⇧↵</kbd>}
+                      </button>
+                    ) : (
+                      <div className="px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-secondary/30 bg-secondary/10">
+                        <div className="flex items-center gap-2 mb-2 text-secondary">
+                          <Sparkles className="h-3.5 w-3.5 shrink-0" />
+                          <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Risposta AI</span>
+                        </div>
+                        <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">{aiAnswer.answer}</p>
+                      </div>
+                    )}
+                    {aiSearch.isError && (
+                      <p className="mt-2 text-[11px] sm:text-xs text-destructive">
+                        Non sono riuscito a rispondere in questo momento. Riprova più tardi.
+                      </p>
+                    )}
+                  </div>
+                )}
                 {flat.length === 0 ? (
                   <div className="px-4 py-8 sm:py-10 text-center text-muted-foreground text-sm">
                     Nessun risultato per "{query}"
@@ -272,9 +341,10 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
                 )}
               </div>
 
-              <div className="px-3 sm:px-4 py-2 sm:py-3 border-t border-white/10 flex items-center gap-3 sm:gap-4 text-[10px] sm:text-[11px] text-muted-foreground/50">
+              <div className="px-3 sm:px-4 py-2 sm:py-3 border-t border-white/10 flex items-center gap-3 sm:gap-4 text-[10px] sm:text-[11px] text-muted-foreground/50 flex-wrap">
                 <span><kbd className="font-mono">↑↓</kbd> naviga</span>
                 <span><kbd className="font-mono">↵</kbd> seleziona</span>
+                {showAskAi && <span><kbd className="font-mono">⇧↵</kbd> chiedi all'IA</span>}
                 <span><kbd className="font-mono">esc</kbd> chiudi</span>
               </div>
             </div>

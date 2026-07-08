@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: ai
+    description: AI-powered search operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /ai/search:
+    post:
+      operationId: aiSearch
+      tags: [ai]
+      summary: Ask the portfolio assistant
+      description: Answers a natural-language question about Nicola Rischia's portfolio using AI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AiSearchRequest"
+      responses:
+        "200":
+          description: AI-generated answer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AiAnswer"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +54,20 @@ components:
           type: string
       required:
         - status
+    AiSearchRequest:
+      type: object
+      properties:
+        query:
+          type: string
+          minLength: 1
+          maxLength: 300
+      required:
+        - query
+    AiAnswer:
+      type: object
+      properties:
+        answer:
+          type: string
+      required:
+        - answer
 

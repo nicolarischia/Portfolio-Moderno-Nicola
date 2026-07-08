@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, MessageCircle } from "lucide-react";
+import { FileDown, Github, Linkedin, Mail, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const CV_URL = `${import.meta.env.BASE_URL}cv-nicola-rischia.pdf`;
 
 export function Contact() {
   return (
@@ -29,6 +31,11 @@ export function Contact() {
             <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-full font-medium h-12 sm:h-14 px-6 sm:px-8 border-white/20 hover:border-secondary hover:text-secondary hover:bg-secondary/10 transition-colors" asChild>
               <a href="https://wa.me/3664079323" target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> WhatsApp
+              </a>
+            </Button>
+            <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-full font-medium h-12 sm:h-14 px-6 sm:px-8 border-white/20 hover:border-primary hover:text-primary hover:bg-primary/10 transition-colors" asChild>
+              <a href={CV_URL} download="CV-Nicola-Rischia.pdf">
+                <FileDown className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Scarica CV
               </a>
             </Button>
           </div>
