@@ -17,20 +17,3 @@ export const HealthCheckResponse = zod.object({
 })
 
 
-/**
- * Answers a natural-language question about Nicola Rischia's portfolio using AI
- * @summary Ask the portfolio assistant
- */
-export const aiSearchBodyQueryMax = 300;
-
-
-
-export const AiSearchBody = zod.object({
-  "query": zod.string().min(1).max(aiSearchBodyQueryMax)
-})
-
-export const AiSearchResponse = zod.object({
-  "answer": zod.string()
-})
-
-

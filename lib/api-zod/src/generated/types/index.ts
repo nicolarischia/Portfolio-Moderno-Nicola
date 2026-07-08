@@ -6,6 +6,4 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export * from './aiAnswer';
-export * from './aiSearchRequest';
 export * from './healthStatus';

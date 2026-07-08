@@ -9,15 +9,3 @@ export interface HealthStatus {
   status: string;
 }
 
-export interface AiSearchRequest {
-  /**
-     * @minLength 1
-     * @maxLength 300
-     */
-  query: string;
-}
-
-export interface AiAnswer {
-  answer: string;
-}
-

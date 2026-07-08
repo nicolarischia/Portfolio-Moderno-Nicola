@@ -1,9 +1,53 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Hash, Code2, GraduationCap, Mail, X, ArrowRight, FileDown, Sparkles, Loader2 } from "lucide-react";
-import { useAiSearch } from "@workspace/api-client-react";
 
 const CV_URL = `${import.meta.env.BASE_URL}cv-nicola-rischia.pdf`;
+
+interface AiTopic {
+  match: string[];
+  answer: string;
+}
+
+const AI_TOPICS: AiTopic[] = [
+  {
+    match: ["competenz", "skill", "tecnolog", "linguaggi", "stack", "sa fare", "sai fare"],
+    answer: "Nicola lavora con React, Node.js, MongoDB e Python per lo sviluppo full-stack, oltre a Figma per il design e Git per il controllo di versione. Conosce anche HTML5, CSS3, Angular e Java.",
+  },
+  {
+    match: ["progett", "portfolio", "lavori", "realizzat"],
+    answer: "Tra i progetti di Nicola ci sono una piattaforma di gestione dati sportivi (React, Node.js, MongoDB), il sito vetrina per Gioielleria Avorio realizzato con Wix e un'interfaccia showcase in React, CSS3 e Bootstrap.",
+  },
+  {
+    match: ["formazione", "studi", "diploma", "scuola", "istituto", "educazione"],
+    answer: "Nicola sta conseguendo il Diploma di Perito Informatico presso l'Istituto Tecnico Tecnologico \"Allievi - San Gallo\" di Terni, con specializzazione in programmazione, reti e architetture di sistemi digitali.",
+  },
+  {
+    match: ["stage", "esperienza", "lavoro", "lavorativ", "azienda"],
+    answer: "Nicola ha svolto due stage: uno presso Digital Web Lab, occupandosi di sviluppo web e app mobile, e uno presso l'agenzia Vittoria Assicurazioni di Avigliano Umbro, dove si è occupato di digitalizzazione documenti e assistenza clienti.",
+  },
+  {
+    match: ["contatt", "email", "mail", "whatsapp", "chiam", "raggiung", "assum"],
+    answer: "Puoi contattare Nicola via email a nicolarischia1@gmail.com o su WhatsApp. Trovi anche i suoi profili GitHub e LinkedIn nella sezione Contatti.",
+  },
+  {
+    match: ["cv", "curriculum", "resume"],
+    answer: "Certo! Puoi scaricare il CV di Nicola in formato PDF direttamente da qui, cercando \"Scarica il CV\" in questa ricerca oppure dai pulsanti nella home e nei contatti.",
+  },
+  {
+    match: ["chi è", "chi sei", "presenta", "chi è nicola"],
+    answer: "Nicola Rischia è uno sviluppatore web italiano specializzato nella creazione di applicazioni moderne, performanti e accessibili, con una forte curiosità per le nuove tecnologie.",
+  },
+];
+
+const AI_FALLBACK =
+  "Posso parlarti delle competenze, dei progetti, della formazione e dei contatti di Nicola. Prova a chiedermi, ad esempio, \"che progetti ha fatto?\" oppure \"come lo contatto?\".";
+
+function simulateAiAnswer(question: string): string {
+  const q = question.toLowerCase();
+  const topic = AI_TOPICS.find(t => t.match.some(keyword => q.includes(keyword)));
+  return topic?.answer ?? AI_FALLBACK;
+}
 
 function downloadCV() {
   const link = document.createElement("a");
@@ -158,10 +202,10 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [aiAnswer, setAiAnswer] = useState<{ question: string; answer: string } | null>(null);
+  const [isAiThinking, setIsAiThinking] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
-
-  const aiSearch = useAiSearch();
+  const aiTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const filtered = query.trim() === ""
     ? ALL_RESULTS
@@ -187,12 +231,13 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
 
   const handleAskAi = useCallback(() => {
     const question = query.trim();
-    if (!question || aiSearch.isPending) return;
-    aiSearch.mutate(
-      { data: { query: question } },
-      { onSuccess: (data) => setAiAnswer({ question, answer: data.answer }) }
-    );
-  }, [query, aiSearch]);
+    if (!question || isAiThinking) return;
+    setIsAiThinking(true);
+    aiTimeoutRef.current = setTimeout(() => {
+      setAiAnswer({ question, answer: simulateAiAnswer(question) });
+      setIsAiThinking(false);
+    }, 600 + Math.random() * 500);
+  }, [query, isAiThinking]);
 
   useEffect(() => { setSelectedIndex(0); setAiAnswer(null); }, [query]);
 
@@ -202,10 +247,15 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
       setQuery("");
       setSelectedIndex(0);
       setAiAnswer(null);
-      aiSearch.reset();
+      setIsAiThinking(false);
+      if (aiTimeoutRef.current) clearTimeout(aiTimeoutRef.current);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
+
+  useEffect(() => () => {
+    if (aiTimeoutRef.current) clearTimeout(aiTimeoutRef.current);
+  }, []);
 
   useEffect(() => {
     const el = listRef.current?.querySelector(`[data-idx="${selectedIndex}"]`);
@@ -267,18 +317,18 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
                     {!aiAnswer || aiAnswer.question !== query.trim() ? (
                       <button
                         onClick={handleAskAi}
-                        disabled={aiSearch.isPending}
+                        disabled={isAiThinking}
                         className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl border border-secondary/30 bg-secondary/10 hover:bg-secondary/15 transition-colors text-left disabled:opacity-70"
                       >
-                        {aiSearch.isPending ? (
+                        {isAiThinking ? (
                           <Loader2 className="h-4 w-4 shrink-0 text-secondary animate-spin" />
                         ) : (
                           <Sparkles className="h-4 w-4 shrink-0 text-secondary" />
                         )}
                         <span className="flex-1 min-w-0 text-xs sm:text-sm font-medium text-secondary truncate">
-                          {aiSearch.isPending ? "Sto pensando..." : `Chiedi all'IA: "${query.trim()}"`}
+                          {isAiThinking ? "Sto pensando..." : `Chiedi all'IA: "${query.trim()}"`}
                         </span>
-                        {!aiSearch.isPending && <kbd className="hidden sm:inline font-mono text-[10px] text-secondary/60">⇧↵</kbd>}
+                        {!isAiThinking && <kbd className="hidden sm:inline font-mono text-[10px] text-secondary/60">⇧↵</kbd>}
                       </button>
                     ) : (
                       <div className="px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-secondary/30 bg-secondary/10">
@@ -288,11 +338,6 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
                         </div>
                         <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">{aiAnswer.answer}</p>
                       </div>
-                    )}
-                    {aiSearch.isError && (
-                      <p className="mt-2 text-[11px] sm:text-xs text-destructive">
-                        Non sono riuscito a rispondere in questo momento. Riprova più tardi.
-                      </p>
                     )}
                   </div>
                 )}

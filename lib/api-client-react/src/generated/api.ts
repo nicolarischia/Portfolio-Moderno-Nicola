@@ -6,27 +6,21 @@
  * OpenAPI spec version: 0.1.0
  */
 import {
-  useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
-  MutationFunction,
   QueryFunction,
   QueryKey,
-  UseMutationOptions,
-  UseMutationResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
 
 import type {
-  AiAnswer,
-  AiSearchRequest,
   HealthStatus
 } from './api.schemas';
 
 import { customFetch } from '../custom-fetch';
-import type { ErrorType , BodyType } from '../custom-fetch';
+import type { ErrorType } from '../custom-fetch';
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -129,75 +123,4 @@ export function useHealthCheck<TData = Awaited<ReturnType<typeof healthCheck>>, 
 
 
 
-
-export const getAiSearchUrl = () => {
-
-
-
-
-  return `/api/ai/search`
-}
-
-/**
- * Answers a natural-language question about Nicola Rischia's portfolio using AI
- * @summary Ask the portfolio assistant
- */
-export const aiSearch = async (aiSearchRequest: AiSearchRequest, options?: RequestInit): Promise<AiAnswer> => {
-
-  return customFetch<AiAnswer>(getAiSearchUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    body: JSON.stringify(aiSearchRequest)
-  }
-);}
-
-
-
-
-export const getAiSearchMutationOptions = <TError = ErrorType<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof aiSearch>>, TError,{data: BodyType<AiSearchRequest>}, TContext>, request?: SecondParameter<typeof customFetch>}
-): UseMutationOptions<Awaited<ReturnType<typeof aiSearch>>, TError,{data: BodyType<AiSearchRequest>}, TContext> => {
-
-const mutationKey = ['aiSearch'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof aiSearch>>, {data: BodyType<AiSearchRequest>}> = (props) => {
-          const {data} = props ?? {};
-
-          return  aiSearch(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type AiSearchMutationResult = NonNullable<Awaited<ReturnType<typeof aiSearch>>>
-    export type AiSearchMutationBody = BodyType<AiSearchRequest>
-    export type AiSearchMutationError = ErrorType<unknown>
-
-    /**
- * @summary Ask the portfolio assistant
- */
-export const useAiSearch = <TError = ErrorType<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof aiSearch>>, TError,{data: BodyType<AiSearchRequest>}, TContext>, request?: SecondParameter<typeof customFetch>}
- ): UseMutationResult<
-        Awaited<ReturnType<typeof aiSearch>>,
-        TError,
-        {data: BodyType<AiSearchRequest>},
-        TContext
-      > => {
-      return useMutation(getAiSearchMutationOptions(options));
-    }
 
