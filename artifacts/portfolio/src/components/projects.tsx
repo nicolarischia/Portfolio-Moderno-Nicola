@@ -26,7 +26,7 @@ export function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="flex justify-center"
+          className="flex justify-start"
         >
           <a
             href={GITHUB_REPOS}
