@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Menu, X } from "lucide-react";
 
+const GITHUB_REPOS = "https://github.com/nicolarischia?tab=repositories";
+
 const navItems = [
-  { name: "Home", href: "#" },
-  { name: "Competenze", href: "#skills" },
-  { name: "Progetti", href: "#projects" },
-  { name: "Formazione", href: "#experience" },
-  { name: "Contatti", href: "#contact" }
+  { name: "Home", href: "#", external: false },
+  { name: "Competenze", href: "#skills", external: false },
+  { name: "Progetti", href: GITHUB_REPOS, external: true },
+  { name: "Formazione", href: "#experience", external: false },
+  { name: "Contatti", href: "#contact", external: false },
 ];
 
 interface NavigationProps {
@@ -43,6 +45,11 @@ export function Navigation({ onSearchOpen }: NavigationProps) {
   }, []);
 
   const scrollTo = (item: typeof navItems[0]) => {
+    if (item.external) {
+      window.open(item.href, "_blank", "noopener noreferrer");
+      setMenuOpen(false);
+      return;
+    }
     const targetId = item.href === "#" ? "home" : item.href.substring(1);
     const el = document.getElementById(targetId);
     if (el) el.scrollIntoView({ behavior: "smooth" });

@@ -130,22 +130,10 @@ const ALL_RESULTS: SearchResult[] = [
     icon: <Code2 className="h-4 w-4" />, keywords: "git versione controllo",
   },
   {
-    id: "pr-sport", category: "Progetti", title: "Piattaforma di Gestione Dati",
-    subtitle: "React · Node.js · MongoDB",
-    action: () => window.open("https://github.com/nicolarischia/ProgettoSport-Natili-Rischia-Tiberi", "_blank"),
-    icon: <ArrowRight className="h-4 w-4" />, keywords: "piattaforma gestione dati sport react nodejs mongodb backend",
-  },
-  {
-    id: "pr-gioielleria", category: "Progetti", title: "Gioielleria Avorio",
-    subtitle: "Sito vetrina · Wix",
-    action: () => window.open("https://info2211238.wixsite.com/gioielleriaavorio", "_blank"),
-    icon: <ArrowRight className="h-4 w-4" />, keywords: "gioielleria avorio wix sito vetrina jewelry",
-  },
-  {
-    id: "pr-showcase", category: "Progetti", title: "Interfaccia Showcase",
-    subtitle: "React · CSS3 · Bootstrap",
-    action: () => window.open("https://github.com/Garlics07/Progetto1_Gilardi_Rischia", "_blank"),
-    icon: <ArrowRight className="h-4 w-4" />, keywords: "interfaccia showcase frontend react css bootstrap",
+    id: "pr-github", category: "Progetti", title: "Vedi tutti i repository",
+    subtitle: "github.com/nicolarischia",
+    action: () => window.open("https://github.com/nicolarischia?tab=repositories", "_blank"),
+    icon: <ArrowRight className="h-4 w-4" />, keywords: "progetti repository github codice lavori portfolio",
   },
   {
     id: "ed-diploma", category: "Formazione", title: "Diploma Perito Informatico",
