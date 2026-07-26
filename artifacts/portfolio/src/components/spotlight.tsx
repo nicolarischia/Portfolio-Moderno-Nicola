@@ -64,117 +64,142 @@ interface SearchResult {
   title: string;
   subtitle?: string;
   action: () => void;
+  preview?: () => void;
   icon: React.ReactNode;
   keywords: string;
+}
+
+function scrollTo(id: string) {
+  if (id === "home") { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 }
 
 const ALL_RESULTS: SearchResult[] = [
   {
     id: "sec-home", category: "Sezioni", title: "Home",
     subtitle: "Vai all'inizio della pagina",
-    action: () => window.scrollTo({ top: 0, behavior: "smooth" }),
+    action: () => scrollTo("home"),
+    preview: () => scrollTo("home"),
     icon: <Hash className="h-4 w-4" />, keywords: "home inizio top hero",
   },
   {
     id: "sec-skills", category: "Sezioni", title: "Competenze Tecniche",
     subtitle: "Frontend, Backend, Strumenti",
-    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    action: () => scrollTo("skills"),
+    preview: () => scrollTo("skills"),
     icon: <Hash className="h-4 w-4" />, keywords: "competenze skills tecnologie strumenti",
   },
   {
     id: "sec-projects", category: "Sezioni", title: "Progetti",
     subtitle: "Portfolio di lavori realizzati",
-    action: () => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" }),
+    action: () => scrollTo("projects"),
+    preview: () => scrollTo("projects"),
     icon: <Hash className="h-4 w-4" />, keywords: "progetti projects portfolio lavori",
   },
   {
     id: "sec-experience", category: "Sezioni", title: "Formazione & Esperienza",
     subtitle: "Percorso di studi e certificazioni",
-    action: () => document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" }),
+    action: () => scrollTo("experience"),
+    preview: () => scrollTo("experience"),
     icon: <Hash className="h-4 w-4" />, keywords: "formazione esperienza education diploma studio",
   },
   {
     id: "sec-contact", category: "Sezioni", title: "Contatti",
     subtitle: "Email e social",
-    action: () => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }),
+    action: () => scrollTo("contact"),
+    preview: () => scrollTo("contact"),
     icon: <Hash className="h-4 w-4" />, keywords: "contatti contact email whatsapp",
   },
   {
     id: "sk-react", category: "Competenze", title: "React", subtitle: "Libreria Frontend",
-    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    action: () => scrollTo("skills"),
+    preview: () => scrollTo("skills"),
     icon: <Code2 className="h-4 w-4" />, keywords: "react frontend javascript",
   },
   {
     id: "sk-nodejs", category: "Competenze", title: "Node.js", subtitle: "Backend JavaScript",
-    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    action: () => scrollTo("skills"),
+    preview: () => scrollTo("skills"),
     icon: <Code2 className="h-4 w-4" />, keywords: "node nodejs backend server",
   },
   {
     id: "sk-mongodb", category: "Competenze", title: "MongoDB", subtitle: "Database NoSQL",
-    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    action: () => scrollTo("skills"),
+    preview: () => scrollTo("skills"),
     icon: <Code2 className="h-4 w-4" />, keywords: "mongodb database nosql",
   },
   {
     id: "sk-python", category: "Competenze", title: "Python", subtitle: "Linguaggio di programmazione",
-    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    action: () => scrollTo("skills"),
+    preview: () => scrollTo("skills"),
     icon: <Code2 className="h-4 w-4" />, keywords: "python programmazione",
   },
   {
     id: "sk-figma", category: "Competenze", title: "Figma", subtitle: "Design & Prototipazione",
-    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    action: () => scrollTo("skills"),
+    preview: () => scrollTo("skills"),
     icon: <Code2 className="h-4 w-4" />, keywords: "figma design ui ux",
   },
   {
     id: "sk-git", category: "Competenze", title: "Git", subtitle: "Controllo versione",
-    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    action: () => scrollTo("skills"),
+    preview: () => scrollTo("skills"),
     icon: <Code2 className="h-4 w-4" />, keywords: "git versione controllo",
   },
   {
     id: "pr-github", category: "Progetti", title: "Vedi tutti i repository",
     subtitle: "github.com/nicolarischia",
     action: () => window.open("https://github.com/nicolarischia?tab=repositories", "_blank"),
+    preview: () => scrollTo("projects"),
     icon: <ArrowRight className="h-4 w-4" />, keywords: "progetti repository github codice lavori portfolio",
   },
   {
     id: "ed-diploma", category: "Formazione", title: "Diploma Perito Informatico",
     subtitle: "ITT Allievi - San Gallo, Terni · 2025",
-    action: () => document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" }),
+    action: () => scrollTo("experience"),
+    preview: () => scrollTo("experience"),
     icon: <GraduationCap className="h-4 w-4" />, keywords: "diploma perito informatico terni scuola istituto",
   },
   {
     id: "ed-react", category: "Formazione", title: "React Avanzato & Architetture Frontend",
     subtitle: "Studio autonomo · 2023–2024",
-    action: () => document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" }),
+    action: () => scrollTo("experience"),
+    preview: () => scrollTo("experience"),
     icon: <GraduationCap className="h-4 w-4" />, keywords: "react avanzato frontend architettura corso",
   },
   {
     id: "ed-freecodecamp", category: "Formazione", title: "Algoritmi & Strutture Dati",
     subtitle: "freeCodeCamp · 2023",
-    action: () => document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" }),
+    action: () => scrollTo("experience"),
+    preview: () => scrollTo("experience"),
     icon: <GraduationCap className="h-4 w-4" />, keywords: "algoritmi strutture dati javascript freecodecamp",
   },
   {
     id: "ct-email", category: "Contatti", title: "Invia un'email",
     subtitle: "nicolarischia1@gmail.com",
     action: () => { window.location.href = "mailto:nicolarischia1@gmail.com"; },
+    preview: () => scrollTo("contact"),
     icon: <Mail className="h-4 w-4" />, keywords: "email contatto scrivi gmail",
   },
   {
     id: "ct-github", category: "Contatti", title: "GitHub",
     subtitle: "github.com/nicolarischia",
     action: () => window.open("https://github.com/nicolarischia", "_blank"),
+    preview: () => scrollTo("contact"),
     icon: <ArrowRight className="h-4 w-4" />, keywords: "github repository codice profilo",
   },
   {
     id: "ct-linkedin", category: "Contatti", title: "LinkedIn",
     subtitle: "linkedin.com/in/nicolarischia",
     action: () => window.open("https://linkedin.com/in/nicolarischia", "_blank"),
+    preview: () => scrollTo("contact"),
     icon: <ArrowRight className="h-4 w-4" />, keywords: "linkedin profilo lavoro",
   },
   {
     id: "ct-cv", category: "Contatti", title: "Scarica il CV",
     subtitle: "Curriculum in formato PDF",
     action: downloadCV,
+    preview: () => scrollTo("contact"),
     icon: <FileDown className="h-4 w-4" />, keywords: "cv curriculum vitae pdf scarica download resume",
   },
 ];
@@ -248,7 +273,9 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
   useEffect(() => {
     const el = listRef.current?.querySelector(`[data-idx="${selectedIndex}"]`);
     el?.scrollIntoView({ block: "nearest" });
-  }, [selectedIndex]);
+    // Live preview: scroll the page to the selected item's section
+    flat[selectedIndex]?.preview?.();
+  }, [selectedIndex, flat]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
