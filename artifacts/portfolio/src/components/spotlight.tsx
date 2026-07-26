@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Hash, Code2, GraduationCap, Mail, X, ArrowRight, FileDown, Sparkles, Loader2 } from "lucide-react";
+import { Search, Hash, Code2, GraduationCap, Mail, X, ArrowRight, FileDown, Sparkles, Loader2, Briefcase } from "lucide-react";
 
 const CV_URL = `${import.meta.env.BASE_URL}cv-nicola-rischia.pdf`;
 
@@ -12,19 +12,19 @@ interface AiTopic {
 const AI_TOPICS: AiTopic[] = [
   {
     match: ["competenz", "skill", "tecnolog", "linguaggi", "stack", "sa fare", "sai fare"],
-    answer: "Nicola lavora con React, Node.js, MongoDB e Python per lo sviluppo full-stack, oltre a Figma per il design e Git per il controllo di versione. Conosce anche HTML5, CSS3, Angular e Java.",
+    answer: "Nicola lavora con HTML5, CSS3, JavaScript, React, Angular e Bootstrap per il frontend; Node.js, PHP, Python, MongoDB e MySQL per il backend. Conosce anche Java (Swing UI), C, Git, Figma, Wix, Cisco Packet Tracer, Jotform e Airtable.",
   },
   {
-    match: ["progett", "portfolio", "lavori", "realizzat"],
-    answer: "Tra i progetti di Nicola ci sono una piattaforma di gestione dati sportivi (React, Node.js, MongoDB), il sito vetrina per Gioielleria Avorio realizzato con Wix e un'interfaccia showcase in React, CSS3 e Bootstrap.",
+    match: ["progett", "portfolio", "lavori", "realizzat", "repository", "github"],
+    answer: "Tutti i progetti di Nicola sono disponibili su GitHub: github.com/nicolarischia",
   },
   {
     match: ["formazione", "studi", "diploma", "scuola", "istituto", "educazione"],
-    answer: "Nicola sta conseguendo il Diploma di Perito Informatico presso l'Istituto Tecnico Tecnologico \"Allievi - San Gallo\" di Terni, con specializzazione in programmazione, reti e architetture di sistemi digitali.",
+    answer: "Nicola sta conseguendo il Diploma di Perito Informatico presso l'Istituto Tecnico Tecnologico \"Allievi - San Gallo\" di Terni, con specializzazione in programmazione, reti informatiche e architetture di sistemi digitali. Previsto 2025.",
   },
   {
-    match: ["stage", "esperienza", "lavoro", "lavorativ", "azienda"],
-    answer: "Nicola ha svolto due stage: uno presso Digital Web Lab, occupandosi di sviluppo web e app mobile, e uno presso l'agenzia Vittoria Assicurazioni di Avigliano Umbro, dove si è occupato di digitalizzazione documenti e assistenza clienti.",
+    match: ["stage", "esperienza", "lavoro", "lavorativ", "azienda", "digital web", "vittoria assicurazion"],
+    answer: "Nicola ha svolto due stage nel 2024–2025: uno presso Digital Web Lab (sviluppo web e app mobile per clienti e aziende) e uno presso l'agenzia Vittoria Assicurazioni di Avigliano Umbro (digitalizzazione documenti e assistenza clienti).",
   },
   {
     match: ["contatt", "email", "mail", "whatsapp", "chiam", "raggiung", "assum"],
@@ -32,7 +32,7 @@ const AI_TOPICS: AiTopic[] = [
   },
   {
     match: ["cv", "curriculum", "resume"],
-    answer: "Certo! Puoi scaricare il CV di Nicola in formato PDF direttamente da qui, cercando \"Scarica il CV\" in questa ricerca oppure dai pulsanti nella home e nei contatti.",
+    answer: "Puoi scaricare il CV di Nicola in formato PDF direttamente da questa ricerca cercando \"Scarica il CV\", oppure dai pulsanti nella sezione Contatti.",
   },
   {
     match: ["chi è", "chi sei", "presenta", "chi è nicola"],
@@ -64,147 +64,204 @@ interface SearchResult {
   title: string;
   subtitle?: string;
   action: () => void;
-  preview?: () => void;
   icon: React.ReactNode;
   keywords: string;
 }
 
-function scrollTo(id: string) {
-  if (id === "home") { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-}
-
 const ALL_RESULTS: SearchResult[] = [
+  // ── Sezioni ──────────────────────────────────────────────────────────────
   {
     id: "sec-home", category: "Sezioni", title: "Home",
     subtitle: "Vai all'inizio della pagina",
-    action: () => scrollTo("home"),
-    preview: () => scrollTo("home"),
+    action: () => window.scrollTo({ top: 0, behavior: "smooth" }),
     icon: <Hash className="h-4 w-4" />, keywords: "home inizio top hero",
   },
   {
     id: "sec-skills", category: "Sezioni", title: "Competenze Tecniche",
     subtitle: "Frontend, Backend, Strumenti",
-    action: () => scrollTo("skills"),
-    preview: () => scrollTo("skills"),
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
     icon: <Hash className="h-4 w-4" />, keywords: "competenze skills tecnologie strumenti",
   },
   {
     id: "sec-projects", category: "Sezioni", title: "Progetti",
-    subtitle: "Portfolio di lavori realizzati",
-    action: () => scrollTo("projects"),
-    preview: () => scrollTo("projects"),
+    subtitle: "Portfolio di lavori su GitHub",
+    action: () => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" }),
     icon: <Hash className="h-4 w-4" />, keywords: "progetti projects portfolio lavori",
   },
   {
     id: "sec-experience", category: "Sezioni", title: "Formazione & Esperienza",
-    subtitle: "Percorso di studi e certificazioni",
-    action: () => scrollTo("experience"),
-    preview: () => scrollTo("experience"),
-    icon: <Hash className="h-4 w-4" />, keywords: "formazione esperienza education diploma studio",
+    subtitle: "Diploma e stage aziendali",
+    action: () => document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Hash className="h-4 w-4" />, keywords: "formazione esperienza education diploma studio stage",
   },
   {
     id: "sec-contact", category: "Sezioni", title: "Contatti",
-    subtitle: "Email e social",
-    action: () => scrollTo("contact"),
-    preview: () => scrollTo("contact"),
+    subtitle: "Email, WhatsApp e social",
+    action: () => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" }),
     icon: <Hash className="h-4 w-4" />, keywords: "contatti contact email whatsapp",
+  },
+
+  // ── Competenze ────────────────────────────────────────────────────────────
+  {
+    id: "sk-html", category: "Competenze", title: "HTML5", subtitle: "Markup Frontend",
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Code2 className="h-4 w-4" />, keywords: "html html5 frontend markup",
+  },
+  {
+    id: "sk-css", category: "Competenze", title: "CSS3", subtitle: "Stili Frontend",
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Code2 className="h-4 w-4" />, keywords: "css css3 stili frontend",
+  },
+  {
+    id: "sk-js", category: "Competenze", title: "JavaScript", subtitle: "Linguaggio Web",
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Code2 className="h-4 w-4" />, keywords: "javascript js frontend linguaggio",
   },
   {
     id: "sk-react", category: "Competenze", title: "React", subtitle: "Libreria Frontend",
-    action: () => scrollTo("skills"),
-    preview: () => scrollTo("skills"),
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
     icon: <Code2 className="h-4 w-4" />, keywords: "react frontend javascript",
   },
   {
+    id: "sk-angular", category: "Competenze", title: "Angular", subtitle: "Framework Frontend",
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Code2 className="h-4 w-4" />, keywords: "angular framework frontend typescript",
+  },
+  {
+    id: "sk-bootstrap", category: "Competenze", title: "Bootstrap", subtitle: "Framework CSS",
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Code2 className="h-4 w-4" />, keywords: "bootstrap css framework ui",
+  },
+  {
     id: "sk-nodejs", category: "Competenze", title: "Node.js", subtitle: "Backend JavaScript",
-    action: () => scrollTo("skills"),
-    preview: () => scrollTo("skills"),
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
     icon: <Code2 className="h-4 w-4" />, keywords: "node nodejs backend server",
   },
   {
-    id: "sk-mongodb", category: "Competenze", title: "MongoDB", subtitle: "Database NoSQL",
-    action: () => scrollTo("skills"),
-    preview: () => scrollTo("skills"),
-    icon: <Code2 className="h-4 w-4" />, keywords: "mongodb database nosql",
+    id: "sk-php", category: "Competenze", title: "PHP", subtitle: "Backend Web",
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Code2 className="h-4 w-4" />, keywords: "php backend server web",
   },
   {
     id: "sk-python", category: "Competenze", title: "Python", subtitle: "Linguaggio di programmazione",
-    action: () => scrollTo("skills"),
-    preview: () => scrollTo("skills"),
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
     icon: <Code2 className="h-4 w-4" />, keywords: "python programmazione",
   },
   {
-    id: "sk-figma", category: "Competenze", title: "Figma", subtitle: "Design & Prototipazione",
-    action: () => scrollTo("skills"),
-    preview: () => scrollTo("skills"),
-    icon: <Code2 className="h-4 w-4" />, keywords: "figma design ui ux",
+    id: "sk-mongodb", category: "Competenze", title: "MongoDB", subtitle: "Database NoSQL",
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Code2 className="h-4 w-4" />, keywords: "mongodb database nosql",
+  },
+  {
+    id: "sk-mysql", category: "Competenze", title: "MySQL", subtitle: "Database Relazionale",
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Code2 className="h-4 w-4" />, keywords: "mysql database sql relazionale",
+  },
+  {
+    id: "sk-java", category: "Competenze", title: "Java (Swing UI)", subtitle: "Programmazione OOP",
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Code2 className="h-4 w-4" />, keywords: "java swing ui oop programmazione",
+  },
+  {
+    id: "sk-c", category: "Competenze", title: "C", subtitle: "Programmazione di sistema",
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Code2 className="h-4 w-4" />, keywords: "c programmazione sistema",
   },
   {
     id: "sk-git", category: "Competenze", title: "Git", subtitle: "Controllo versione",
-    action: () => scrollTo("skills"),
-    preview: () => scrollTo("skills"),
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
     icon: <Code2 className="h-4 w-4" />, keywords: "git versione controllo",
   },
+  {
+    id: "sk-figma", category: "Competenze", title: "Figma", subtitle: "Design & Prototipazione",
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Code2 className="h-4 w-4" />, keywords: "figma design ui ux prototipazione",
+  },
+  {
+    id: "sk-wix", category: "Competenze", title: "Wix", subtitle: "Creazione siti web",
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Code2 className="h-4 w-4" />, keywords: "wix sito web cms",
+  },
+  {
+    id: "sk-cisco", category: "Competenze", title: "Cisco Packet Tracer", subtitle: "Simulazione reti",
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Code2 className="h-4 w-4" />, keywords: "cisco packet tracer reti network simulazione",
+  },
+  {
+    id: "sk-jotform", category: "Competenze", title: "Jotform", subtitle: "Creazione moduli",
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Code2 className="h-4 w-4" />, keywords: "jotform form moduli",
+  },
+  {
+    id: "sk-airtable", category: "Competenze", title: "Airtable", subtitle: "Database visuale",
+    action: () => document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Code2 className="h-4 w-4" />, keywords: "airtable database tabelle foglio",
+  },
+
+  // ── Progetti ──────────────────────────────────────────────────────────────
   {
     id: "pr-github", category: "Progetti", title: "Vedi tutti i repository",
     subtitle: "github.com/nicolarischia",
     action: () => window.open("https://github.com/nicolarischia?tab=repositories", "_blank"),
-    preview: () => scrollTo("projects"),
     icon: <ArrowRight className="h-4 w-4" />, keywords: "progetti repository github codice lavori portfolio",
   },
+
+  // ── Formazione ────────────────────────────────────────────────────────────
   {
-    id: "ed-diploma", category: "Formazione", title: "Diploma Perito Informatico",
-    subtitle: "ITT Allievi - San Gallo, Terni · 2025",
-    action: () => scrollTo("experience"),
-    preview: () => scrollTo("experience"),
-    icon: <GraduationCap className="h-4 w-4" />, keywords: "diploma perito informatico terni scuola istituto",
+    id: "ed-diploma", category: "Formazione", title: "Diploma di Perito Informatico",
+    subtitle: "ITT Allievi - San Gallo, Terni · Previsto 2025",
+    action: () => document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <GraduationCap className="h-4 w-4" />, keywords: "diploma perito informatico terni scuola istituto allievi san gallo formazione",
+  },
+
+  // ── Esperienza ────────────────────────────────────────────────────────────
+  {
+    id: "ex-dwl", category: "Esperienza", title: "Stage — Digital Web Lab",
+    subtitle: "Avigliano Umbro · 2024–2025",
+    action: () => document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Briefcase className="h-4 w-4" />, keywords: "stage digital web lab avigliano umbro sviluppo app mobile sito lavoro esperienza",
   },
   {
-    id: "ed-react", category: "Formazione", title: "React Avanzato & Architetture Frontend",
-    subtitle: "Studio autonomo · 2023–2024",
-    action: () => scrollTo("experience"),
-    preview: () => scrollTo("experience"),
-    icon: <GraduationCap className="h-4 w-4" />, keywords: "react avanzato frontend architettura corso",
+    id: "ex-vittoria", category: "Esperienza", title: "Stage — Vittoria Assicurazioni",
+    subtitle: "Agenzia Avorio & Febbraro · 2024–2025",
+    action: () => document.getElementById("experience")?.scrollIntoView({ behavior: "smooth" }),
+    icon: <Briefcase className="h-4 w-4" />, keywords: "stage vittoria assicurazioni avorio febbraro avigliano umbro digitalizzazione documenti lavoro esperienza",
   },
-  {
-    id: "ed-freecodecamp", category: "Formazione", title: "Algoritmi & Strutture Dati",
-    subtitle: "freeCodeCamp · 2023",
-    action: () => scrollTo("experience"),
-    preview: () => scrollTo("experience"),
-    icon: <GraduationCap className="h-4 w-4" />, keywords: "algoritmi strutture dati javascript freecodecamp",
-  },
+
+  // ── Contatti ──────────────────────────────────────────────────────────────
   {
     id: "ct-email", category: "Contatti", title: "Invia un'email",
     subtitle: "nicolarischia1@gmail.com",
     action: () => { window.location.href = "mailto:nicolarischia1@gmail.com"; },
-    preview: () => scrollTo("contact"),
     icon: <Mail className="h-4 w-4" />, keywords: "email contatto scrivi gmail",
+  },
+  {
+    id: "ct-whatsapp", category: "Contatti", title: "WhatsApp",
+    subtitle: "+39 366 407 9323",
+    action: () => window.open("https://wa.me/3664079323", "_blank"),
+    icon: <Mail className="h-4 w-4" />, keywords: "whatsapp messaggio chat contatto",
   },
   {
     id: "ct-github", category: "Contatti", title: "GitHub",
     subtitle: "github.com/nicolarischia",
     action: () => window.open("https://github.com/nicolarischia", "_blank"),
-    preview: () => scrollTo("contact"),
     icon: <ArrowRight className="h-4 w-4" />, keywords: "github repository codice profilo",
   },
   {
     id: "ct-linkedin", category: "Contatti", title: "LinkedIn",
     subtitle: "linkedin.com/in/nicolarischia",
     action: () => window.open("https://linkedin.com/in/nicolarischia", "_blank"),
-    preview: () => scrollTo("contact"),
     icon: <ArrowRight className="h-4 w-4" />, keywords: "linkedin profilo lavoro",
   },
   {
     id: "ct-cv", category: "Contatti", title: "Scarica il CV",
     subtitle: "Curriculum in formato PDF",
     action: downloadCV,
-    preview: () => scrollTo("contact"),
     icon: <FileDown className="h-4 w-4" />, keywords: "cv curriculum vitae pdf scarica download resume",
   },
 ];
 
-const CATEGORY_ORDER = ["Sezioni", "Competenze", "Progetti", "Formazione", "Contatti"];
+const CATEGORY_ORDER = ["Sezioni", "Competenze", "Progetti", "Formazione", "Esperienza", "Contatti"];
 
 interface SpotlightProps {
   isOpen: boolean;
@@ -273,9 +330,7 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
   useEffect(() => {
     const el = listRef.current?.querySelector(`[data-idx="${selectedIndex}"]`);
     el?.scrollIntoView({ block: "nearest" });
-    // Live preview: scroll the page to the selected item's section
-    flat[selectedIndex]?.preview?.();
-  }, [selectedIndex, flat]);
+  }, [selectedIndex]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
