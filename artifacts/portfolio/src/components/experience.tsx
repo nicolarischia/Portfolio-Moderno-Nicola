@@ -29,62 +29,68 @@ const timeline = [
 export function Experience() {
   return (
     <section id="experience" className="py-16 md:py-24">
-      <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5 }}
-          className="mb-10 sm:mb-16 p-4 sm:p-6 bg-black/20 backdrop-blur-sm rounded-xl border border-white/5"
-        >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Formazione & Esperienza</h2>
-          <div className="w-12 h-1 bg-secondary" />
-        </motion.div>
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl sm:rounded-3xl overflow-hidden">
+          <div className="p-5 sm:p-8">
 
-        <div className="relative border-l border-white/20 bg-black/10 backdrop-blur-sm p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-white/5">
-          {timeline.map((item, index) => (
             <motion.div
-              key={index}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="mb-8 sm:mb-12 pl-5 sm:pl-12 relative group last:mb-0"
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.5 }}
+              className="mb-8 sm:mb-10"
             >
-              <span className={`absolute -left-[5px] top-2 w-[9px] h-[9px] rounded-full bg-black border-2 transition-all duration-300 group-hover:scale-150 group-hover:shadow-[0_0_10px] ${
-                item.type === "work"
-                  ? "border-secondary group-hover:bg-secondary group-hover:shadow-secondary/80"
-                  : "border-primary group-hover:bg-primary group-hover:shadow-primary/80"
-              }`} />
-
-              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1.5 sm:gap-4 mb-2">
-                <h3 className="text-base sm:text-xl font-bold text-foreground group-hover:text-primary transition-colors leading-tight">
-                  {item.title}
-                </h3>
-                <span className="text-xs sm:text-sm font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded self-start sm:self-auto whitespace-nowrap">
-                  {item.year}
-                </span>
-              </div>
-
-              <h4 className="text-sm sm:text-md font-medium text-foreground/70 mb-2 sm:mb-3">
-                {item.link ? (
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-secondary transition-colors underline-offset-2 hover:underline"
-                  >
-                    {item.institution}
-                  </a>
-                ) : (
-                  item.institution
-                )}
-              </h4>
-              <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-2xl">
-                {item.description}
-              </p>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Formazione & Esperienza</h2>
+              <div className="w-12 h-1 bg-secondary" />
             </motion.div>
-          ))}
+
+            <div className="relative border-l border-white/20">
+              {timeline.map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="mb-8 sm:mb-12 pl-5 sm:pl-12 relative group last:mb-0"
+                >
+                  <span className={`absolute -left-[5px] top-2 w-[9px] h-[9px] rounded-full bg-black border-2 transition-all duration-300 group-hover:scale-150 group-hover:shadow-[0_0_10px] ${
+                    item.type === "work"
+                      ? "border-secondary group-hover:bg-secondary group-hover:shadow-secondary/80"
+                      : "border-primary group-hover:bg-primary group-hover:shadow-primary/80"
+                  }`} />
+
+                  <div className="flex flex-col sm:flex-row sm:items-baseline gap-1.5 sm:gap-4 mb-2">
+                    <h3 className="text-base sm:text-xl font-bold text-foreground group-hover:text-primary transition-colors leading-tight">
+                      {item.title}
+                    </h3>
+                    <span className="text-xs sm:text-sm font-mono text-primary bg-primary/10 border border-primary/20 px-2 py-0.5 rounded self-start sm:self-auto whitespace-nowrap">
+                      {item.year}
+                    </span>
+                  </div>
+
+                  <h4 className="text-sm sm:text-md font-medium text-foreground/70 mb-2 sm:mb-3">
+                    {item.link ? (
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-secondary transition-colors underline-offset-2 hover:underline"
+                      >
+                        {item.institution}
+                      </a>
+                    ) : (
+                      item.institution
+                    )}
+                  </h4>
+                  <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+                    {item.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+
+          </div>
         </div>
       </div>
     </section>
