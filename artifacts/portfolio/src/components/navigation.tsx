@@ -172,88 +172,81 @@ export function Navigation({ onSearchOpen }: NavigationProps) {
         className="hidden sm:flex flex-col items-center fixed top-6 left-1/2 -translate-x-1/2 z-50"
         style={{ maxWidth: "95vw" }}
       >
-        {/* Pill */}
-        <motion.div
+        {/* Pill — fixed width, never resizes */}
+        <div
           id="nav-pill"
-          layout
-          transition={{ type: "spring", stiffness: 400, damping: 35 }}
-          className="bg-black/80 backdrop-blur-lg border border-white/10 p-1.5 rounded-full shadow-2xl shadow-primary/10 overflow-hidden"
+          className="relative bg-black/80 backdrop-blur-lg border border-white/10 p-1.5 rounded-full shadow-2xl shadow-primary/10 overflow-hidden"
         >
-          <AnimatePresence mode="wait" initial={false}>
-            {/* ── NAV MODE ── */}
-            {!searchMode && (
-              <motion.div
-                key="nav"
-                initial={{ opacity: 0, x: -24 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -24 }}
-                transition={{ duration: 0.22, ease: "easeInOut" }}
-                className="flex items-center gap-0.5 sm:gap-1"
-              >
-                {navItems.map((item) => {
-                  const active = isActive(item);
-                  const hovered = hoveredSection === item.name;
-                  return (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      onMouseEnter={() => setHoveredSection(item.name)}
-                      onMouseLeave={() => setHoveredSection(null)}
-                      onClick={(e) => { e.preventDefault(); handleClick(item); }}
-                      className={`relative px-3 md:px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-colors z-10 block whitespace-nowrap shrink-0 ${
-                        active ? "text-black" : "text-white/70 hover:text-white"
-                      }`}
-                    >
-                      <span className="relative z-20">{item.name}</span>
-                      {active && (
-                        <motion.div
-                          layoutId="active-pill"
-                          className="absolute inset-0 bg-primary rounded-full -z-10"
-                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        />
-                      )}
-                      {!active && hovered && (
-                        <motion.div
-                          layoutId="hover-pill"
-                          className="absolute inset-0 bg-white/10 rounded-full -z-10"
-                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                        />
-                      )}
-                    </a>
-                  );
-                })}
-
-                <div className="w-px h-5 bg-white/15 mx-0.5 shrink-0" />
-
-                <button
-                  onClick={openSearch}
-                  title="Cerca (⌘K)"
-                  className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full text-white/60 hover:text-primary hover:bg-primary/10 transition-all text-xs sm:text-sm shrink-0 group"
+          {/* ── NAV ITEMS — always in DOM to hold the width ── */}
+          <div
+            className={`flex items-center gap-0.5 sm:gap-1 transition-opacity duration-200 ${
+              searchMode ? "opacity-0 pointer-events-none" : "opacity-100"
+            }`}
+          >
+            {navItems.map((item) => {
+              const active = isActive(item);
+              const hovered = hoveredSection === item.name;
+              return (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onMouseEnter={() => setHoveredSection(item.name)}
+                  onMouseLeave={() => setHoveredSection(null)}
+                  onClick={(e) => { e.preventDefault(); handleClick(item); }}
+                  className={`relative px-3 md:px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-colors z-10 block whitespace-nowrap shrink-0 ${
+                    active ? "text-black" : "text-white/70 hover:text-white"
+                  }`}
                 >
-                  <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4 group-hover:scale-110 transition-transform" />
-                  <span className="hidden sm:inline font-medium">Cerca</span>
-                  <kbd className="hidden md:inline-flex items-center px-1.5 py-0.5 bg-white/10 rounded text-[10px] font-mono ml-1">⌘K</kbd>
-                </button>
-              </motion.div>
-            )}
+                  <span className="relative z-20">{item.name}</span>
+                  {active && (
+                    <motion.div
+                      layoutId="active-pill"
+                      className="absolute inset-0 bg-primary rounded-full -z-10"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                  {!active && hovered && (
+                    <motion.div
+                      layoutId="hover-pill"
+                      className="absolute inset-0 bg-white/10 rounded-full -z-10"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                </a>
+              );
+            })}
 
-            {/* ── SEARCH MODE ── */}
+            <div className="w-px h-5 bg-white/15 mx-0.5 shrink-0" />
+
+            <button
+              onClick={openSearch}
+              title="Cerca (⌘K)"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-full text-white/60 hover:text-primary hover:bg-primary/10 transition-all text-xs sm:text-sm shrink-0 group"
+            >
+              <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4 group-hover:scale-110 transition-transform" />
+              <span className="hidden sm:inline font-medium">Cerca</span>
+              <kbd className="hidden md:inline-flex items-center px-1.5 py-0.5 bg-white/10 rounded text-[10px] font-mono ml-1">⌘K</kbd>
+            </button>
+          </div>
+
+          {/* ── SEARCH — absolutely overlaid, same bounding box ── */}
+          <AnimatePresence>
             {searchMode && (
               <motion.div
                 key="search"
-                initial={{ opacity: 0, x: 24 }}
+                initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 24 }}
-                transition={{ duration: 0.22, ease: "easeInOut" }}
-                className="flex items-center gap-2 px-2"
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
+                className="absolute inset-0 flex items-center gap-2 px-3"
               >
-                <Search className="h-4 w-4 text-primary shrink-0 ml-1" />
+                <Search className="h-4 w-4 text-primary shrink-0" />
                 <input
                   ref={searchInputRef}
                   value={query}
                   onChange={e => setQuery(e.target.value)}
                   placeholder="Cerca nel portfolio..."
-                  className="w-56 sm:w-72 bg-transparent text-sm text-foreground placeholder:text-white/40 outline-none py-2"
+                  className="flex-1 min-w-0 bg-transparent text-sm text-foreground placeholder:text-white/40 outline-none"
                 />
                 {query && (
                   <button
@@ -265,14 +258,14 @@ export function Navigation({ onSearchOpen }: NavigationProps) {
                 )}
                 <button
                   onClick={closeSearch}
-                  className="flex items-center gap-1 px-2.5 py-1.5 rounded-full text-white/50 hover:text-white hover:bg-white/10 transition-all text-xs font-mono shrink-0"
+                  className="px-2.5 py-1.5 rounded-full text-white/50 hover:text-white hover:bg-white/10 transition-all text-xs font-mono shrink-0"
                 >
                   esc
                 </button>
               </motion.div>
             )}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
         {/* ── Results dropdown ── */}
         <AnimatePresence>
