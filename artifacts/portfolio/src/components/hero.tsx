@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
 import { ArrowRight, FileDown, Github, Linkedin, Mail } from "lucide-react";
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 
 const CV_URL = `${import.meta.env.BASE_URL}cv-nicola-rischia.pdf`;
 
 export function Hero() {
+  const [, navigate] = useLocation();
+
   return (
     <section id="home" className="min-h-[100dvh] flex flex-col justify-center relative pt-24 pb-16 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
@@ -31,10 +34,12 @@ export function Hero() {
           </p>
 
           <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-            <Button size="lg" className="rounded-full font-medium shadow-[0_0_20px_rgba(132,204,22,0.3)] hover:shadow-[0_0_30px_rgba(132,204,22,0.5)] transition-all text-sm sm:text-base px-5 sm:px-6" asChild>
-              <a href="#projects">
-                Vedi Progetti <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
+            <Button
+              size="lg"
+              className="rounded-full font-medium shadow-[0_0_20px_rgba(132,204,22,0.3)] hover:shadow-[0_0_30px_rgba(132,204,22,0.5)] transition-all text-sm sm:text-base px-5 sm:px-6"
+              onClick={() => navigate("/competenze")}
+            >
+              Scopri le Competenze <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             <Button size="lg" variant="outline" className="rounded-full font-medium text-sm sm:text-base px-5 sm:px-6 border-white/20 hover:border-secondary hover:text-secondary hover:bg-secondary/10 transition-colors" asChild>
               <a href={CV_URL} download="CV-Nicola-Rischia.pdf">

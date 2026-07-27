@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import {
   siHtml5, siCss, siJavascript, siReact, siAngular, siBootstrap,
   siNodedotjs, siPhp, siPython, siMongodb, siMysql, siOpenjdk,
-  siC, siGit, siFigma, siWix, siCisco, siAirtable
+  siC, siCplusplus, siGit, siFigma, siWix, siCisco, siAirtable,
 } from "simple-icons";
 
 interface SimpleIcon {
@@ -57,11 +57,12 @@ const categories: { title: string; skills: Skill[] }[] = [
   {
     title: "Backend",
     skills: [
-      { name: "Node.js",  icon: <TechIcon icon={siNodedotjs} /> },
-      { name: "PHP",      icon: <TechIcon icon={siPhp} /> },
-      { name: "Python",   icon: <TechIcon icon={siPython} /> },
-      { name: "MongoDB",  icon: <TechIcon icon={siMongodb} /> },
-      { name: "MySQL",    icon: <TechIcon icon={siMysql} /> },
+      { name: "Node.js",    icon: <TechIcon icon={siNodedotjs} /> },
+      { name: "PHP",        icon: <TechIcon icon={siPhp} /> },
+      { name: "Python",     icon: <TechIcon icon={siPython} /> },
+      { name: "MongoDB",    icon: <TechIcon icon={siMongodb} /> },
+      { name: "MySQL",      icon: <TechIcon icon={siMysql} /> },
+      { name: "phpMyAdmin", icon: <DotIcon color="#6C78AF" /> },
     ],
   },
   {
@@ -69,10 +70,21 @@ const categories: { title: string; skills: Skill[] }[] = [
     skills: [
       { name: "Java (Swing UI)", icon: <TechIcon icon={siOpenjdk} color="#ED8B00" /> },
       { name: "C",               icon: <TechIcon icon={siC} /> },
+      { name: "C++",             icon: <TechIcon icon={siCplusplus} color="#00599C" /> },
+      { name: "C#",              icon: <DotIcon color="#239120" /> },
     ],
   },
   {
-    title: "Strumenti",
+    title: "AI & Machine Learning",
+    skills: [
+      { name: "ChatGPT",        icon: <DotIcon color="#74AA9C" /> },
+      { name: "Claude",         icon: <DotIcon color="#D97757" /> },
+      { name: "Gemini",         icon: <DotIcon color="#4285F4" /> },
+      { name: "Machine Learning", icon: <DotIcon color="#A855F7" /> },
+    ],
+  },
+  {
+    title: "Strumenti & Piattaforme",
     skills: [
       { name: "Git",                 icon: <TechIcon icon={siGit} /> },
       { name: "Figma",               icon: <TechIcon icon={siFigma} /> },
@@ -80,6 +92,9 @@ const categories: { title: string; skills: Skill[] }[] = [
       { name: "Cisco Packet Tracer", icon: <TechIcon icon={siCisco} /> },
       { name: "Jotform",             icon: <DotIcon color="#FF6100" /> },
       { name: "Airtable",            icon: <TechIcon icon={siAirtable} /> },
+      { name: "Lovable.dev",         icon: <DotIcon color="#E879F9" /> },
+      { name: "Bolt.new",            icon: <DotIcon color="#F59E0B" /> },
+      { name: "Base44.com",          icon: <DotIcon color="#3B82F6" /> },
     ],
   },
 ];
@@ -88,46 +103,50 @@ export function Skills() {
   return (
     <section id="skills" className="py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 relative">
-          <div className="absolute inset-0 bg-black/20 backdrop-blur-sm rounded-2xl sm:rounded-3xl border border-white/5 -z-10" />
+        <div className="bg-black/30 backdrop-blur-md border border-white/10 rounded-2xl sm:rounded-3xl overflow-hidden">
+          <div className="p-5 sm:p-8">
 
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.5 }}
-            className="lg:col-span-4 p-5 sm:p-8"
-          >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Competenze Tecniche</h2>
-            <div className="w-12 h-1 bg-secondary mb-5 sm:mb-6" />
-            <p className="text-foreground/80 text-base sm:text-lg">
-              Un toolkit completo che spazia tra interfacce frontend, architetture backend e concetti fondamentali di programmazione.
-            </p>
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.5 }}
+              className="mb-8 sm:mb-10"
+            >
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Competenze Tecniche</h2>
+              <div className="w-12 h-1 bg-secondary mb-5 sm:mb-6" />
+              <p className="text-foreground/80 text-base sm:text-lg max-w-2xl">
+                Un toolkit completo che spazia tra interfacce frontend, architetture backend, concetti fondamentali di programmazione e strumenti AI.
+              </p>
+            </motion.div>
 
-          <div className="lg:col-span-8 grid sm:grid-cols-2 gap-x-6 gap-y-8 sm:gap-x-8 sm:gap-y-12 p-5 sm:p-8">
-            {categories.map((category, index) => (
-              <motion.div
-                key={category.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-foreground/90">{category.title}</h3>
-                <div className="flex flex-wrap gap-2 sm:gap-3">
-                  {category.skills.map((skill) => (
-                    <div
-                      key={skill.name}
-                      className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 bg-black/40 border border-white/10 rounded-lg text-xs sm:text-sm font-medium text-foreground hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all shadow-sm"
-                    >
-                      {skill.icon}
-                      {skill.name}
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+            <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10">
+              {categories.map((category, index) => (
+                <motion.div
+                  key={category.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: index * 0.08 }}
+                >
+                  <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-foreground/90 border-b border-white/10 pb-2">
+                    {category.title}
+                  </h3>
+                  <div className="flex flex-wrap gap-2 sm:gap-2.5">
+                    {category.skills.map((skill) => (
+                      <div
+                        key={skill.name}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-black/40 border border-white/10 rounded-lg text-xs sm:text-sm font-medium text-foreground hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-all shadow-sm"
+                      >
+                        {skill.icon}
+                        {skill.name}
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
           </div>
         </div>
       </div>
