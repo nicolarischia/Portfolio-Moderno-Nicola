@@ -9,7 +9,7 @@ const GITHUB_REPOS = "https://github.com/nicolarischia?tab=repositories";
 const navItems = [
   { name: "Home",       href: "/",           external: false },
   { name: "Competenze", href: "/competenze",  external: false },
-  { name: "Progetti",   href: GITHUB_REPOS,  external: true  },
+  { name: "Progetti",   href: "/progetti",    external: false },
   { name: "Formazione", href: "/formazione",  external: false },
   { name: "Servizi",    href: "/servizi",     external: false },
   { name: "Contatti",   href: "/contatti",    external: false },
@@ -31,7 +31,8 @@ const NAV_RESULTS: NavResult[] = [
   { id: "form",       title: "Formazione & Esperienza", subtitle: "Diploma e stage aziendali",    route: "/formazione", keywords: "formazione esperienza diploma stage digital web vittoria assicurazioni" },
   { id: "serv",       title: "Servizi",                 subtitle: "I servizi offerti",             route: "/servizi",    keywords: "servizi offerta cosa fai" },
   { id: "cont",       title: "Contatti",                subtitle: "Email, WhatsApp e social",     route: "/contatti",   keywords: "contatti email whatsapp github linkedin" },
-  { id: "github",     title: "Progetti su GitHub",      subtitle: "github.com/nicolarischia",     url: GITHUB_REPOS,   keywords: "progetti repository github codice lavori" },
+  { id: "progetti",   title: "Progetti",                  subtitle: "Repository e lavori",           route: "/progetti",  keywords: "progetti lavori portfolio" },
+  { id: "github",     title: "GitHub — tutti i repository", subtitle: "github.com/nicolarischia",  url: GITHUB_REPOS,   keywords: "github repository codice" },
   { id: "email",      title: "Invia un'email",          subtitle: "nicolarischia1@gmail.com",     url: "mailto:nicolarischia1@gmail.com", keywords: "email contatto scrivi gmail" },
   { id: "whatsapp",   title: "WhatsApp",                subtitle: "+39 366 407 9323",             url: "https://wa.me/3664079323", keywords: "whatsapp messaggio chat" },
   { id: "linkedin",   title: "LinkedIn",                subtitle: "linkedin.com/in/nicolarischia", url: "https://linkedin.com/in/nicolarischia", keywords: "linkedin profilo lavoro" },

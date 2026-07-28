@@ -1,58 +1,9 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Hash, Code2, GraduationCap, Mail, X, ArrowRight, FileDown, Sparkles, Loader2, Briefcase, Wrench } from "lucide-react";
+import { Search, Hash, Code2, GraduationCap, Mail, X, ArrowRight, FileDown, Briefcase, Wrench } from "lucide-react";
 
 const CV_URL = `${import.meta.env.BASE_URL}cv-nicola-rischia.pdf`;
-
-interface AiTopic {
-  match: string[];
-  answer: string;
-}
-
-const AI_TOPICS: AiTopic[] = [
-  {
-    match: ["competenz", "skill", "tecnolog", "linguaggi", "stack", "sa fare", "sai fare"],
-    answer: "Nicola lavora con HTML5, CSS3, JavaScript, React, Angular e Bootstrap per il frontend; Node.js, PHP, Python, MongoDB, MySQL e phpMyAdmin per il backend. Conosce anche Java (Swing UI), C, C++, C#, strumenti AI come ChatGPT, Claude e Gemini, Machine Learning, e piattaforme come Git, Figma, Wix, Lovable.dev, Bolt.new e Base44.",
-  },
-  {
-    match: ["progett", "portfolio", "lavori", "realizzat", "repository", "github"],
-    answer: "Tutti i progetti di Nicola sono disponibili su GitHub: github.com/nicolarischia",
-  },
-  {
-    match: ["formazione", "studi", "diploma", "scuola", "istituto", "educazione"],
-    answer: "Nicola sta conseguendo il Diploma di Perito Informatico presso l'Istituto Tecnico Tecnologico \"Allievi - San Gallo\" di Terni, con specializzazione in programmazione, reti informatiche e architetture di sistemi digitali. Previsto 2025.",
-  },
-  {
-    match: ["stage", "esperienza", "lavoro", "lavorativ", "azienda", "digital web", "vittoria assicurazion"],
-    answer: "Nicola ha svolto due stage nel 2024–2025: uno presso Digital Web Lab (sviluppo web e app mobile per clienti e aziende) e uno presso l'agenzia Vittoria Assicurazioni di Avigliano Umbro (digitalizzazione documenti e assistenza clienti).",
-  },
-  {
-    match: ["servizi", "offri", "cosa fai", "lavori", "disponibile"],
-    answer: "La sezione Servizi è in arrivo. Presto troverai i dettagli su tutti i servizi offerti da Nicola.",
-  },
-  {
-    match: ["contatt", "email", "mail", "whatsapp", "chiam", "raggiung", "assum"],
-    answer: "Puoi contattare Nicola via email a nicolarischia1@gmail.com o su WhatsApp. Trovi anche i suoi profili GitHub e LinkedIn nella sezione Contatti.",
-  },
-  {
-    match: ["cv", "curriculum", "resume"],
-    answer: "Puoi scaricare il CV di Nicola in formato PDF direttamente da questa ricerca cercando \"Scarica il CV\", oppure dai pulsanti nella sezione Contatti.",
-  },
-  {
-    match: ["chi è", "chi sei", "presenta", "chi è nicola"],
-    answer: "Nicola Rischia è uno sviluppatore web italiano specializzato nella creazione di applicazioni moderne, performanti e accessibili, con una forte curiosità per le nuove tecnologie.",
-  },
-];
-
-const AI_FALLBACK =
-  "Posso parlarti delle competenze, dei progetti, della formazione e dei contatti di Nicola. Prova a chiedermi, ad esempio, \"che progetti ha fatto?\" oppure \"come lo contatto?\".";
-
-function simulateAiAnswer(question: string): string {
-  const q = question.toLowerCase();
-  const topic = AI_TOPICS.find(t => t.match.some(keyword => q.includes(keyword)));
-  return topic?.answer ?? AI_FALLBACK;
-}
 
 function downloadCV() {
   const link = document.createElement("a");
@@ -84,11 +35,8 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
   const [, navigate] = useLocation();
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [aiAnswer, setAiAnswer] = useState<{ question: string; answer: string } | null>(null);
-  const [isAiThinking, setIsAiThinking] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
-  const aiTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const goTo = useCallback((path: string) => {
     navigate(path);
@@ -283,10 +231,10 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
 
     // ── Progetti ──────────────────────────────────────────────────────────────
     {
-      id: "pr-github", category: "Progetti", title: "Vedi tutti i repository",
-      subtitle: "github.com/nicolarischia",
-      action: () => { window.open("https://github.com/nicolarischia?tab=repositories", "_blank"); onClose(); },
-      icon: <ArrowRight className="h-4 w-4" />, keywords: "progetti repository github codice lavori portfolio",
+      id: "pr-progetti", category: "Progetti", title: "Progetti",
+      subtitle: "Repository e lavori su GitHub",
+      action: () => goTo("/progetti"),
+      icon: <Hash className="h-4 w-4" />, keywords: "progetti repository github codice lavori portfolio",
     },
 
     // ── Formazione ────────────────────────────────────────────────────────────
@@ -367,39 +315,21 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
   }, {});
 
   const flat = Object.values(grouped).flat();
-  const showAskAi = query.trim().length > 2;
 
   const handleSelect = useCallback((result: SearchResult) => {
     result.action();
   }, []);
 
-  const handleAskAi = useCallback(() => {
-    const question = query.trim();
-    if (!question || isAiThinking) return;
-    setIsAiThinking(true);
-    aiTimeoutRef.current = setTimeout(() => {
-      setAiAnswer({ question, answer: simulateAiAnswer(question) });
-      setIsAiThinking(false);
-    }, 600 + Math.random() * 500);
-  }, [query, isAiThinking]);
-
-  useEffect(() => { setSelectedIndex(0); setAiAnswer(null); }, [query]);
+  useEffect(() => { setSelectedIndex(0); }, [query]);
 
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 50);
       setQuery("");
       setSelectedIndex(0);
-      setAiAnswer(null);
-      setIsAiThinking(false);
-      if (aiTimeoutRef.current) clearTimeout(aiTimeoutRef.current);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
-
-  useEffect(() => () => {
-    if (aiTimeoutRef.current) clearTimeout(aiTimeoutRef.current);
-  }, []);
 
   useEffect(() => {
     const el = listRef.current?.querySelector(`[data-idx="${selectedIndex}"]`);
@@ -412,12 +342,11 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
       if (e.key === "Escape") { onClose(); return; }
       if (e.key === "ArrowDown") { e.preventDefault(); setSelectedIndex(i => Math.min(i + 1, flat.length - 1)); }
       else if (e.key === "ArrowUp") { e.preventDefault(); setSelectedIndex(i => Math.max(i - 1, 0)); }
-      else if (e.key === "Enter" && e.shiftKey && showAskAi) { e.preventDefault(); handleAskAi(); }
       else if (e.key === "Enter" && flat[selectedIndex]) { handleSelect(flat[selectedIndex]); }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [isOpen, flat, selectedIndex, handleSelect, onClose, showAskAi, handleAskAi]);
+  }, [isOpen, flat, selectedIndex, handleSelect, onClose]);
 
   return (
     <AnimatePresence>
@@ -456,35 +385,6 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
               </div>
 
               <div ref={listRef} className="max-h-[55vh] sm:max-h-[60vh] overflow-y-auto py-1 sm:py-2 no-scrollbar">
-                {showAskAi && (
-                  <div className="px-3 sm:px-4 pb-2 sm:pb-3 pt-1">
-                    {!aiAnswer || aiAnswer.question !== query.trim() ? (
-                      <button
-                        onClick={handleAskAi}
-                        disabled={isAiThinking}
-                        className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg sm:rounded-xl border border-secondary/30 bg-secondary/10 hover:bg-secondary/15 transition-colors text-left disabled:opacity-70"
-                      >
-                        {isAiThinking ? (
-                          <Loader2 className="h-4 w-4 shrink-0 text-secondary animate-spin" />
-                        ) : (
-                          <Sparkles className="h-4 w-4 shrink-0 text-secondary" />
-                        )}
-                        <span className="flex-1 min-w-0 text-xs sm:text-sm font-medium text-secondary truncate">
-                          {isAiThinking ? "Sto pensando..." : `Chiedi all'IA: "${query.trim()}"`}
-                        </span>
-                        {!isAiThinking && <kbd className="hidden sm:inline font-mono text-[10px] text-secondary/60">⇧↵</kbd>}
-                      </button>
-                    ) : (
-                      <div className="px-3 sm:px-4 py-3 sm:py-4 rounded-lg sm:rounded-xl border border-secondary/30 bg-secondary/10">
-                        <div className="flex items-center gap-2 mb-2 text-secondary">
-                          <Sparkles className="h-3.5 w-3.5 shrink-0" />
-                          <span className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider">Risposta AI</span>
-                        </div>
-                        <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed">{aiAnswer.answer}</p>
-                      </div>
-                    )}
-                  </div>
-                )}
                 {flat.length === 0 ? (
                   <div className="px-4 py-8 sm:py-10 text-center text-muted-foreground text-sm">
                     Nessun risultato per "{query}"
@@ -533,7 +433,6 @@ export function Spotlight({ isOpen, onClose }: SpotlightProps) {
               <div className="px-3 sm:px-4 py-2 sm:py-3 border-t border-white/10 flex items-center gap-3 sm:gap-4 text-[10px] sm:text-[11px] text-muted-foreground/50 flex-wrap">
                 <span><kbd className="font-mono">↑↓</kbd> naviga</span>
                 <span><kbd className="font-mono">↵</kbd> seleziona</span>
-                {showAskAi && <span><kbd className="font-mono">⇧↵</kbd> chiedi all'IA</span>}
                 <span><kbd className="font-mono">esc</kbd> chiudi</span>
               </div>
             </div>

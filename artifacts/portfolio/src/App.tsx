@@ -9,6 +9,7 @@ import Competenze from "@/pages/competenze";
 import Formazione from "@/pages/formazione";
 import Contatti from "@/pages/contatti";
 import Servizi from "@/pages/servizi";
+import Progetti from "@/pages/progetti";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ function Router() {
         <Route path="/formazione" component={Formazione} />
         <Route path="/servizi" component={Servizi} />
         <Route path="/contatti" component={Contatti} />
+        <Route path="/progetti" component={Progetti} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

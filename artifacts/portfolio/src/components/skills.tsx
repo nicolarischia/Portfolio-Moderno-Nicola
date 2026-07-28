@@ -37,6 +37,18 @@ function DotIcon({ color }: { color: string }) {
   );
 }
 
+function LetterIcon({ text, color }: { text: string; color: string }) {
+  return (
+    <span
+      className="inline-flex items-center justify-center w-3.5 h-3.5 rounded text-[7px] font-bold shrink-0 leading-none"
+      style={{ color, border: `1px solid ${color}55`, backgroundColor: `${color}18` }}
+      aria-hidden="true"
+    >
+      {text}
+    </span>
+  );
+}
+
 interface Skill {
   name: string;
   icon: React.ReactNode;
@@ -62,7 +74,7 @@ const categories: { title: string; skills: Skill[] }[] = [
       { name: "Python",     icon: <TechIcon icon={siPython} /> },
       { name: "MongoDB",    icon: <TechIcon icon={siMongodb} /> },
       { name: "MySQL",      icon: <TechIcon icon={siMysql} /> },
-      { name: "phpMyAdmin", icon: <DotIcon color="#6C78AF" /> },
+      { name: "phpMyAdmin", icon: <LetterIcon text="pMA" color="#6C78AF" /> },
     ],
   },
   {
@@ -71,16 +83,16 @@ const categories: { title: string; skills: Skill[] }[] = [
       { name: "Java (Swing UI)", icon: <TechIcon icon={siOpenjdk} color="#ED8B00" /> },
       { name: "C",               icon: <TechIcon icon={siC} /> },
       { name: "C++",             icon: <TechIcon icon={siCplusplus} color="#00599C" /> },
-      { name: "C#",              icon: <DotIcon color="#239120" /> },
+      { name: "C#",              icon: <LetterIcon text="C#" color="#239120" /> },
     ],
   },
   {
     title: "AI & Machine Learning",
     skills: [
-      { name: "ChatGPT",        icon: <DotIcon color="#74AA9C" /> },
-      { name: "Claude",         icon: <DotIcon color="#D97757" /> },
-      { name: "Gemini",         icon: <DotIcon color="#4285F4" /> },
-      { name: "Machine Learning", icon: <DotIcon color="#A855F7" /> },
+      { name: "ChatGPT",          icon: <LetterIcon text="GPT" color="#74AA9C" /> },
+      { name: "Claude",           icon: <LetterIcon text="Cl"  color="#D97757" /> },
+      { name: "Gemini",           icon: <LetterIcon text="Gm"  color="#4285F4" /> },
+      { name: "Machine Learning", icon: <LetterIcon text="ML"  color="#A855F7" /> },
     ],
   },
   {
@@ -90,11 +102,11 @@ const categories: { title: string; skills: Skill[] }[] = [
       { name: "Figma",               icon: <TechIcon icon={siFigma} /> },
       { name: "Wix",                 icon: <TechIcon icon={siWix} /> },
       { name: "Cisco Packet Tracer", icon: <TechIcon icon={siCisco} /> },
-      { name: "Jotform",             icon: <DotIcon color="#FF6100" /> },
+      { name: "Jotform",             icon: <LetterIcon text="Jf"  color="#FF6100" /> },
       { name: "Airtable",            icon: <TechIcon icon={siAirtable} /> },
-      { name: "Lovable.dev",         icon: <DotIcon color="#E879F9" /> },
-      { name: "Bolt.new",            icon: <DotIcon color="#F59E0B" /> },
-      { name: "Base44.com",          icon: <DotIcon color="#3B82F6" /> },
+      { name: "Lovable.dev",         icon: <LetterIcon text="Lv"  color="#E879F9" /> },
+      { name: "Bolt.new",            icon: <LetterIcon text="Bt"  color="#F59E0B" /> },
+      { name: "Base44.com",          icon: <LetterIcon text="B44" color="#3B82F6" /> },
     ],
   },
 ];
