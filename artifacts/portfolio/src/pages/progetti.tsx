@@ -6,6 +6,7 @@ import { Star, GitFork, ExternalLink, Calendar, Code2, Loader2, AlertCircle, Che
 interface GHRepo {
   id: number;
   name: string;
+  full_name: string;
   description: string | null;
   html_url: string;
   language: string | null;
@@ -41,17 +42,17 @@ const LANG_COLORS: Record<string, string> = {
 
 const PER_PAGE = 9;
 
-/** Follows GitHub Link-header pagination to fetch every repo. */
+/** Follows GitHub Link-header pagination to fetch every visible repo. */
 async function fetchAllRepos(): Promise<GHRepo[]> {
   const all: GHRepo[] = [];
   let url: string | null =
-    "https://api.github.com/users/nicolarischia/repos?sort=updated&per_page=100&type=owner";
+    "https://api.github.com/users/nicolarischia/repos?sort=updated&per_page=100&type=all";
 
   while (url) {
     const res: Response = await fetch(url);
     if (!res.ok) throw new Error(`Errore GitHub API: ${res.status}`);
     const page: GHRepo[] = await res.json();
-    all.push(...page.filter(r => !r.fork && !r.private));
+    all.push(...page);
 
     const link: string = res.headers.get("Link") ?? "";
     const next: RegExpMatchArray | null = link.match(/<([^>]+)>;\s*rel="next"/);
@@ -61,10 +62,10 @@ async function fetchAllRepos(): Promise<GHRepo[]> {
   return all;
 }
 
-async function fetchReadmeDescription(repoName: string): Promise<string | null> {
+async function fetchReadmeDescription(fullName: string): Promise<string | null> {
   try {
     const res = await fetch(
-      `https://api.github.com/repos/nicolarischia/${repoName}/readme`
+      `https://api.github.com/repos/${fullName}/readme`
     );
     if (!res.ok) return null;
     const data = await res.json();
@@ -127,7 +128,7 @@ export default function Progetti() {
     isError,
     error,
   } = useQuery<GHRepo[]>({
-    queryKey: ["gh-repos-nicolarischia"],
+    queryKey: ["gh-repos-nicolarischia-all"],
     queryFn: fetchAllRepos,
     staleTime: 5 * 60 * 1000,
     retry: 2,
@@ -145,7 +146,7 @@ export default function Progetti() {
   const readmeResults = useQueries({
     queries: pageRepos.map(repo => ({
       queryKey: ["gh-readme", repo.name],
-      queryFn: () => fetchReadmeDescription(repo.name),
+      queryFn: () => fetchReadmeDescription(repo.full_name),
       staleTime: 10 * 60 * 1000,
       retry: false,
       enabled: pageRepos.length > 0,
@@ -190,7 +191,7 @@ export default function Progetti() {
                   </h2>
                   <div className="w-12 h-0.5 bg-primary mb-4" />
                   <p className="text-muted-foreground text-base">
-                    Repository pubblici aggiornati da{" "}
+                    Repository pubblici aggiornati dal profilo{" "}
                     <a
                       href="https://github.com/nicolarischia"
                       target="_blank"
