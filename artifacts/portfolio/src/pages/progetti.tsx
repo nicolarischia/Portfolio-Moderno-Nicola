@@ -48,13 +48,13 @@ async function fetchAllRepos(): Promise<GHRepo[]> {
     "https://api.github.com/users/nicolarischia/repos?sort=updated&per_page=100&type=owner";
 
   while (url) {
-    const res = await fetch(url);
+    const res: Response = await fetch(url);
     if (!res.ok) throw new Error(`Errore GitHub API: ${res.status}`);
     const page: GHRepo[] = await res.json();
     all.push(...page.filter(r => !r.fork && !r.private));
 
-    const link = res.headers.get("Link") ?? "";
-    const next = link.match(/<([^>]+)>;\s*rel="next"/);
+    const link: string = res.headers.get("Link") ?? "";
+    const next: RegExpMatchArray | null = link.match(/<([^>]+)>;\s*rel="next"/);
     url = next ? next[1] : null;
   }
 

@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import {
   siHtml5, siCss, siJavascript, siReact, siAngular, siBootstrap,
   siNodedotjs, siPhp, siPython, siMongodb, siMysql, siOpenjdk,
-  siC, siCplusplus, siGit, siFigma, siWix, siCisco, siAirtable,
+  siC, siCplusplus, siDotnet, siPhpmyadmin, siScikitlearn,
+  siGit, siFigma, siWix, siCisco, siAirtable,
 } from "simple-icons";
 
 interface SimpleIcon {
@@ -49,6 +50,36 @@ function LetterIcon({ text, color }: { text: string; color: string }) {
   );
 }
 
+function FaviconIcon({
+  src,
+  fallbackColor,
+}: {
+  src: string;
+  fallbackColor: string;
+}) {
+  return (
+    <span
+      className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-sm shrink-0 overflow-hidden"
+      style={{ backgroundColor: fallbackColor }}
+      aria-hidden="true"
+    >
+      <img
+        src={src}
+        alt=""
+        width="14"
+        height="14"
+        className="w-full h-full object-contain"
+        onError={(event) => {
+          event.currentTarget.style.display = "none";
+        }}
+      />
+    </span>
+  );
+}
+
+const brandIcon = (name: string) =>
+  `${import.meta.env.BASE_URL}img/brand/${name}.png`;
+
 interface Skill {
   name: string;
   icon: React.ReactNode;
@@ -74,7 +105,7 @@ const categories: { title: string; skills: Skill[] }[] = [
       { name: "Python",     icon: <TechIcon icon={siPython} /> },
       { name: "MongoDB",    icon: <TechIcon icon={siMongodb} /> },
       { name: "MySQL",      icon: <TechIcon icon={siMysql} /> },
-      { name: "phpMyAdmin", icon: <LetterIcon text="pMA" color="#6C78AF" /> },
+      { name: "phpMyAdmin", icon: <TechIcon icon={siPhpmyadmin} /> },
     ],
   },
   {
@@ -83,16 +114,16 @@ const categories: { title: string; skills: Skill[] }[] = [
       { name: "Java (Swing UI)", icon: <TechIcon icon={siOpenjdk} color="#ED8B00" /> },
       { name: "C",               icon: <TechIcon icon={siC} /> },
       { name: "C++",             icon: <TechIcon icon={siCplusplus} color="#00599C" /> },
-      { name: "C#",              icon: <LetterIcon text="C#" color="#239120" /> },
+      { name: "C#",              icon: <TechIcon icon={siDotnet} color="#512BD4" /> },
     ],
   },
   {
     title: "AI & Machine Learning",
     skills: [
-      { name: "ChatGPT",          icon: <LetterIcon text="GPT" color="#74AA9C" /> },
-      { name: "Claude",           icon: <LetterIcon text="Cl"  color="#D97757" /> },
-      { name: "Gemini",           icon: <LetterIcon text="Gm"  color="#4285F4" /> },
-      { name: "Machine Learning", icon: <LetterIcon text="ML"  color="#A855F7" /> },
+      { name: "ChatGPT",          icon: <FaviconIcon src={brandIcon("chatgpt")} fallbackColor="#74AA9C" /> },
+      { name: "Claude",           icon: <FaviconIcon src={brandIcon("claude")} fallbackColor="#D97757" /> },
+      { name: "Gemini",           icon: <FaviconIcon src={brandIcon("gemini")} fallbackColor="#4285F4" /> },
+      { name: "Machine Learning", icon: <TechIcon icon={siScikitlearn} /> },
     ],
   },
   {
@@ -104,9 +135,9 @@ const categories: { title: string; skills: Skill[] }[] = [
       { name: "Cisco Packet Tracer", icon: <TechIcon icon={siCisco} /> },
       { name: "Jotform",             icon: <LetterIcon text="Jf"  color="#FF6100" /> },
       { name: "Airtable",            icon: <TechIcon icon={siAirtable} /> },
-      { name: "Lovable.dev",         icon: <LetterIcon text="Lv"  color="#E879F9" /> },
-      { name: "Bolt.new",            icon: <LetterIcon text="Bt"  color="#F59E0B" /> },
-      { name: "Base44.com",          icon: <LetterIcon text="B44" color="#3B82F6" /> },
+      { name: "Lovable.dev",         icon: <FaviconIcon src={brandIcon("lovable")} fallbackColor="#E879F9" /> },
+      { name: "Bolt.new",            icon: <FaviconIcon src={brandIcon("bolt")} fallbackColor="#F59E0B" /> },
+      { name: "Base44.com",          icon: <FaviconIcon src={brandIcon("base44")} fallbackColor="#3B82F6" /> },
     ],
   },
 ];

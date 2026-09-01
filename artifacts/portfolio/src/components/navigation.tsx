@@ -170,7 +170,7 @@ export function Navigation({ onSearchOpen }: NavigationProps) {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="hidden sm:flex flex-col items-center fixed top-6 left-1/2 -translate-x-1/2 z-50"
+        className="hidden sm:flex flex-col items-center fixed top-6 left-1/2 -translate-x-1/2 z-50 w-max max-w-[95vw]"
         style={{ maxWidth: "95vw" }}
       >
         {/* Pill — fixed width, never resizes */}
@@ -277,7 +277,7 @@ export function Navigation({ onSearchOpen }: NavigationProps) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.97 }}
               transition={{ type: "spring", stiffness: 420, damping: 30 }}
-              className="mt-2 w-80 bg-black/90 backdrop-blur-lg border border-white/10 rounded-2xl shadow-2xl shadow-primary/10 overflow-hidden"
+              className="mt-2 w-full bg-black/90 backdrop-blur-lg border border-white/10 rounded-2xl shadow-2xl shadow-primary/10 overflow-hidden"
             >
               {results.map((r, i) => {
                 const isSelected = selectedIdx === i;
@@ -317,7 +317,7 @@ export function Navigation({ onSearchOpen }: NavigationProps) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.15 }}
-              className="mt-2 w-72 bg-black/90 backdrop-blur-lg border border-white/10 rounded-2xl shadow-xl px-4 py-4 text-center text-sm text-white/40"
+              className="mt-2 w-full bg-black/90 backdrop-blur-lg border border-white/10 rounded-2xl shadow-xl px-4 py-4 text-center text-sm text-white/40"
             >
               Nessun risultato per "{query}"
             </motion.div>

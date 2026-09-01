@@ -1,1 +1,2 @@
 - [Simulated vs real AI features](simulated-ai-features.md) — when asked to "simulate AI" or user rejects a real LLM integration, remove all backend/API wiring, don't just hide the UI.
+- [Local brand assets](local-brand-assets.md) — external favicons can be blocked by the preview proxy; local copies keep branded UI icons reliable.
